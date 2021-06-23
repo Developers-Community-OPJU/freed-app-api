@@ -21,7 +21,6 @@ const Student_Schema = new mongoose.Schema({
 function VALIDATE_REGISTER(user) {
     const schema = Joi.object({
         RID: Joi.string().required(),
-        email: Joi.string().email().required(),
         password: Joi.string().required().min(6).max(1024)
     });
 
