@@ -5,7 +5,7 @@ create models - student - admin - superadmin
 
 ## SERVER API
 
-# BASE_URL = ""
+# BASE_URL = "https://dco-leave-app-api.herokuapp.com/"
 
 [][get] - api/records list all the records
 [][get] - api/record/:id get particular record  

@@ -4,7 +4,8 @@ module.exports = {
     // LIST ALL LEAVE FORMS
     all: async (req, res) => {
         try {
-            res.send("showing all records")
+            let records = await RecordModel.find({});
+            res.send(records);
         } catch (error) {
             console.error(error)
         }
