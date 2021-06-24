@@ -42,7 +42,7 @@ Student_Schema.methods.generateAuthToken = function () {
     return token;
 }
 
-const Student = new mongoose.model('users', Student_Schema)
+const Student = new mongoose.model('students', Student_Schema)
 
 module.exports = {
     Student,

@@ -18,12 +18,11 @@ module.exports = {
             // FINDING STUDENT WITH RID
 
             const student = await Student.findOne({ RID })
-            console.log(student);
             if (!student) {
                 return res
                     .status(401)
                     .json({
-                        msg: "Invalid Credentials, Try again.",
+                        msg: "Not Registered yet ?",
                         success: false,
                     });
             }

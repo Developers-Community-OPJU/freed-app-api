@@ -2,6 +2,6 @@
     "jwtPrivateKey" : "opjunleaveappprivatekey",  
     "_db" : {
         "local":"mongodb://localhost/leaveApp_db",
-        "remote" : "mongodb://nifopju:opjunif@cluster0-shard-00-00.rp66a.mongodb.net:27017,cluster0-shard-00-01.rp66a.mongodb.net:27017,cluster0-shard-00-02.rp66a.mongodb.net:27017/nif_dbo?ssl=true&replicaSet=atlas-t50pzt-shard-0&authSource=admin&retryWrites=true&w=majority"
+        "remote" : "mongodb+srv://dcoadmin:dcoadmin@cluster0.5nd46.mongodb.net/leaveAppDB"
     }
 }

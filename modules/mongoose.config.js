@@ -1,8 +1,7 @@
 const config = require('config')
 
 const mongoose = require("mongoose");
-// const url = "mongodb://localhost/leaveApp_db";
-const url = config.get("_db").local;
+const url = config.get("_db").remote;
 mongoose.connect(url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
