@@ -1,11 +1,17 @@
 const mongoose = require('mongoose');
-const joi = require('joi')
+const Joi = require('joi');
 
 
 const RecordSchema = new mongoose.Schema({
-    RID: {
+    studentId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "users"
+        ref: "students",
+        required: true
+    },
+    RID: {
+        type: String,
+        trim: true,
+        required: true
     },
     destination: {
         type: String,
@@ -41,7 +47,20 @@ const RecordSchema = new mongoose.Schema({
     }
 });
 
+// VALIDATING STUDENT SCHEMA - ON LOGIN
+function VALIDATE_RECORD(record) {
+    const schema = Joi.object({
+        RID: Joi.string().required(),
+        studentId: Joi.required(),
+        from: Joi.date().required(),
+        to: Joi.date().required(),
+        destination: Joi.string().required(),
+        reason: Joi.string().max(200).required()
+    });
+    return schema.validate(record);
+}
+
 
 const RecordModel = new mongoose.model("records", RecordSchema)
 
-module.exports = { RecordModel }
+module.exports = { RecordModel, VALIDATE_RECORD }

@@ -7,9 +7,13 @@ create models - student - admin - superadmin
 
 # BASE_URL = "https://dco-leave-app-api.herokuapp.com/"
 
-[][get] - api/records list all the records
-[][get] - api/record/:id get particular record  
-[][post] - api/record create leave forms
+### RECORDS ENDPOINTS
+
+[x][get] - api/records/ - list all the records
+[x][get] - api/record/:id - get particular record  
+[x][get] - api/record/sid/:studentId' - get all records of the student  
+[x][get] - api/record/:id/:studentId - get particular record of the student
+[x][post] - api/record/new - request new leave
 
 ### AUTH - student
 
@@ -23,12 +27,6 @@ create models - student - admin - superadmin
 
 ## tasks
 
-### STUDENT
-
-[] take leave
-[] register / login
-[] list all the leave of the student on their dashboard
-
 proper on boarding-process
 profile
 
@@ -37,6 +35,9 @@ profile
 [] get notified for new leave
 [] list all the leaves
 [] perform action on the leave
+
+limited records / sem or / year
+no new leave record untill previous records are finalized
 
 profile
 Auth

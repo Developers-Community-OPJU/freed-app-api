@@ -23,11 +23,11 @@ app.use(bodyParser.json());
 
 
 // ROUTES
-const users = require('./routes/student')
+const students = require('./routes/student')
 const records = require('./routes/records')
 const auth = require('./routes/auth')
-app.use('/api/student', users);
-app.use('/api/leave', records);
+app.use('/api/student', students);
+app.use('/api/records', records);
 app.use('/api/auth', auth);
 
 
