@@ -19,6 +19,8 @@ create models - student - admin - superadmin
 
 [x][post] - api/auth/register/student
 [x][post] - api/auth/login/student
+[x][post] - api/auth/spread_token
+send token in headers as - [x-leave-auth-token] : token_value
 
 ### AUTH - admin
 

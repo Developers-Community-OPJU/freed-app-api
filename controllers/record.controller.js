@@ -53,7 +53,7 @@ module.exports = {
                     studentId: req.params.studentId,
                 });
 
-            if (!records) return res.status(404).json({ msg: "No Records Found", success: false });
+            if (records.length == 0) return res.status(404).json({ msg: "No Records Found", success: false });
 
             res.json({
                 success: true,
