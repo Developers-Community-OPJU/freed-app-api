@@ -1,6 +1,7 @@
 const { Student, VALIDATE_LOGIN, VALIDATE_REGISTER } = require("../models/StudentModel")
 const bcrypt = require('bcryptjs');
 const config = require('config');
+const jwt = require('jsonwebtoken');
 
 
 module.exports = {
@@ -92,15 +93,14 @@ module.exports = {
     SPREAD_TOKEN: async (req, res) => {
         try {
             const token = req.header("x-leave-auth-token");
-            if (!token) return res.status(401).json({ msg: "Access denied, No token provided.", success: false });
+            if (!token) return res.status(401).json({ msg: "Access denied, No token provided.", success: false })
             let decoded = jwt.verify(token, config.get('jwtPrivateKey'));
             try {
                 // checking duplicate user
-                decoded = await Student.findOne({ _id: decoded._id })
-                    .select('--v -_id -password -records')
+                decoded = await Student.findOne({ _id: decoded.id })
+                    .select('-password -__v -records')
                 if (decoded) {
                     res.json({
-                        msg: `user Found with username ${decoded.firstName} ${decoded.lastName}`,
                         success: true,
                         decoded
                     })
