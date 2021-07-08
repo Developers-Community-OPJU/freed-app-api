@@ -28,8 +28,8 @@ module.exports = {
             // FINDING RECORD WITH STUDENT ID AND RECORD ID 
             const record = await RecordModel
                 .findOne({
-                    RID: req.params.RID,
-                    _id: req.params.recordId
+                    RID: req.params.studentId,
+                    _id: req.params.id
                 });
 
             if (!record) return res.status(404).json({ msg: "No Records Found", success: false });
@@ -70,7 +70,7 @@ module.exports = {
 
             const record = await RecordModel
                 .find({
-                    RID: req.params.id,
+                    _id: req.params.id,
                 });
 
             if (!record) return res.status(404).json({ msg: "No Records Found", success: false });

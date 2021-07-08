@@ -10,10 +10,10 @@ create models - student - admin - superadmin
 ### RECORDS ENDPOINTS
 
 [x][get] - api/records/ - list all the records
-[x][get] - api/record/:id - get particular record  
-[x][get] - api/record/sid/:studentId' - get all records of the student  
-[x][get] - api/record/:id/:studentId - get particular record of the student
-[x][post] - api/record/new - request new leave
+[x][get] - api/records/:id - get particular record  
+[x][get] - api/records/id/:studentId' - get all records of the student  
+[x][get] - api/records/:id/:studentId - get particular record of the student
+[x][post] - api/records/new - request new leave
 
 ### AUTH - student
 
