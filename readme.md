@@ -14,6 +14,8 @@ create models - student - admin - superadmin
 [x][get] - api/records/id/:studentId' - get all records of the student  
 [x][get] - api/records/:id/:studentId - get particular record of the student
 [x][post] - api/records/new - request new leave
+[x][delete] - api/records/:id - cancel request
+[x][put] - api/records/:id?permitted=[true/false] - permit update action for admin
 
 ### AUTH - student
 

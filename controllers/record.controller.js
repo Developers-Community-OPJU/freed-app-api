@@ -69,7 +69,7 @@ module.exports = {
         try {
 
             const record = await RecordModel
-                .find({
+                .findOne({
                     _id: req.params.id,
                 });
 
@@ -110,6 +110,52 @@ module.exports = {
                     msg: "Request Sent.. wait for the approval",
                     success: true,
                     result
+                })
+
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    // CANCEL REQUEST FOR APPROVAL
+    CANCEL_REQUEST: async (req, res) => {
+        try {
+            const result = await RecordModel.findByIdAndRemove({
+                _id: req.params.id
+            })
+            if (!result) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
+            res
+                .status(200)
+                .json({
+                    msg: "Request Cancelled!",
+                    success: true
+                })
+
+        } catch (error) {
+            console.error(error)
+        }
+    },
+
+    // UPDATE STATUS
+    UPDATE_STATUS: async (req, res) => {
+        try {
+            const permitted = req.query.permitted;
+
+            // finding the document and performing update 
+            const record = await RecordModel.findOneAndUpdate(
+                {
+                    _id: req.params.id
+                },
+                { permitted })
+
+            if (!record) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
+
+            await record.save();
+            res
+                .status(200)
+                .json({
+                    msg: "Record Permitted!",
+                    success: true,
                 })
 
         } catch (error) {
