@@ -139,14 +139,14 @@ module.exports = {
     // UPDATE STATUS
     UPDATE_STATUS: async (req, res) => {
         try {
-            const permitted = req.query.permitted;
+            const status = req.query.status;
 
             // finding the document and performing update 
             const record = await RecordModel.findOneAndUpdate(
                 {
                     _id: req.params.id
                 },
-                { permitted })
+                { status })
 
             if (!record) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
 
@@ -154,7 +154,7 @@ module.exports = {
             res
                 .status(200)
                 .json({
-                    msg: "Record Permitted!",
+                    msg: status,
                     success: true,
                 })
 

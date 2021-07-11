@@ -37,9 +37,10 @@ const RecordSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    permitted: {
-        type: Boolean,
-        default: false
+    status: {
+        type: String,
+        enum: ['ACCEPTED', 'DECLINED', 'PROCESS'],
+        default: 'PROCESS'
     },
     HODRemark: {
         type: String,
