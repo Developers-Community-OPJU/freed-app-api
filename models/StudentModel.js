@@ -11,6 +11,8 @@ const Student_Schema = new mongoose.Schema({
     lastName: { type: String, trim: true },
     email: { type: String, trim: true },
     branch: { type: String },
+    course: { type: String },
+    semester: { type: Number },
     records: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'records'

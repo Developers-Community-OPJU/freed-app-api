@@ -17,6 +17,10 @@ create models - student - admin - superadmin
 [x][delete] - api/records/:id - cancel request
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action for admin
 
+### PROFILE
+
+[x][post] - api/student/update - update student profile
+
 ### AUTH - student
 
 [x][post] - api/auth/register/student

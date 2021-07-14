@@ -90,6 +90,40 @@ module.exports = {
         }
     },
 
+    RESET_PASSWORD: async (req, res) => {
+        try {
+
+            // GET CONTACT NUMBER / EMAIL
+            // GENERATE NEW OTP
+            //SEND OTP TO CONTACT /EMAIL
+
+            const token = req.header("x-leave-auth-token");
+            if (!token) return res.status(401).json({ msg: "Access denied, No token provided.", success: false })
+            let decoded = jwt.verify(token, config.get('jwtPrivateKey'));
+            try {
+                // checking duplicate user
+                decoded = await Student.findOne({ _id: decoded.id })
+                    .select('-password -__v -records')
+                if (decoded) {
+                    res.json({
+                        success: true,
+                        decoded
+                    })
+                }
+                else {
+                    res.json({
+                        msg: `Sorry, Student Not Found`,
+                        success: false
+                    })
+                }
+            } catch (error) {
+                res.send(error)
+            }
+        } catch (error) {
+            res.status(400).json({ msg: "Invalid token.", error, success: false })
+        }
+    },
+
     SPREAD_TOKEN: async (req, res) => {
         try {
             const token = req.header("x-leave-auth-token");

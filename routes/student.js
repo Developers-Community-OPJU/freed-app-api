@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const studentController = require('../controllers/student.controller')
 
-// listing records
-router.get('/');
+// UPDATING STUDENT PROFILE
+router.post('/update', studentController.UPDATE_STUDENT_PROFILE);
 
 module.exports = router;
