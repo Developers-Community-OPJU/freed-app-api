@@ -20,6 +20,19 @@ create models - student - admin - superadmin
 ### PROFILE
 
 [x][post] - api/student/update - update student profile
+send req body as as follows -
+
+# note make sure validate for each key not to be empty overwrite values are allowed.
+
+{
+"\_id": "60d42f8c83052434089e7672",
+"firstName": "",
+"lastName": "",
+"email" : "amanadmin@leaveopju.com",
+"course": "B.Tech",
+"semester": 6,
+"branch": "CSE"
+}
 
 ### AUTH - student
 
