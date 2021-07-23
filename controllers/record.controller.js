@@ -71,7 +71,10 @@ module.exports = {
             const record = await RecordModel
                 .findOne({
                     _id: req.params.id,
-                });
+                }).populate({
+                    path: 'studentId',
+                    select: '-password -__V -records'
+                })
 
             if (!record) return res.status(404).json({ msg: "No Records Found", success: false });
 

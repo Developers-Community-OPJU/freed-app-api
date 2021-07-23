@@ -46,6 +46,9 @@ send token in headers as - [x-leave-auth-token] : token_value
 [][post] - api/auth/register/admin
 [][post] - api/auth/login/admin
 
+### ADMIN ROUTES
+[x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
+
 ## tasks
 
 proper on boarding-process
