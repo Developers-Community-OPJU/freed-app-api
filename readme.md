@@ -43,10 +43,13 @@ send token in headers as - [x-leave-auth-token] : token_value
 
 ### AUTH - admin
 
-[][post] - api/auth/register/admin
-[][post] - api/auth/login/admin
+[x][post] - api/auth/admin/register
+[x][post] - api/auth/admin/login
+[x][post] - api/auth/spread_token
+send token in headers as - [x-admin-auth-token] : token_value
 
 ### ADMIN ROUTES
+
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
 
 ## tasks

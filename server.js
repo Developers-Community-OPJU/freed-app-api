@@ -22,13 +22,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
-// ROUTES
 const students = require('./routes/student')
 const records = require('./routes/records')
 const auth = require('./routes/auth')
+const authAdmin = require('./routes/auth.admin')
+
+// ROUTES
 app.use('/api/student', students);
 app.use('/api/records', records);
 app.use('/api/auth', auth);
+app.use('/api/auth/admin', authAdmin);
 
 
 // establishing the server on the port 3000
