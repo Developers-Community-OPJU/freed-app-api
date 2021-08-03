@@ -56,6 +56,9 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 
 [x][get] - /api/gateway/checklist - list all the checklist
 [x][post] - /api/gateway/checkout - perform checkin and checkout
+{
+"student" : "60eb41009f076b0004abe4a4"
+}
 
 ## tasks
 
