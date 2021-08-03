@@ -1,6 +1,7 @@
 const { json } = require('body-parser');
 const { RecordModel, VALIDATE_RECORD } = require('../models/RecordModel');
 const { Student } = require('../models/StudentModel');
+const { Checklist } = require('../models/Checklist');
 
 module.exports = {
     // LIST ALL LEAVE FORMS
@@ -154,6 +155,31 @@ module.exports = {
             if (!record) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
 
             await record.save();
+
+            // MARKING ON CHECKLIST IF ACCEPTED BY WARDEN
+            if (record.status == "ACCEPTED") {
+
+                // checking if user already present in checklist
+
+                const found = await Checklist.findOne({
+                    student: record.studentId,
+                    record: record._id
+                })
+
+                console.log("user found in the checklist : ", found)
+
+                // if not in the list add to the list
+                if (!found) {
+                    console.log("Adding user to the checklist")
+                    const checklist = await new Checklist({
+                        student: record.studentId,
+                        record: record._id
+                    })
+
+                    await checklist.save()
+                }
+            }
+
             res
                 .status(200)
                 .json({

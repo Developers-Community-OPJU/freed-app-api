@@ -52,6 +52,11 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
 
+### GATEWAY - CHECKIN-CHECKOUT ROUTES
+
+[x][get] - /api/gateway/checklist - list all the checklist
+[x][post] - /api/gateway/checkout - perform checkin and checkout
+
 ## tasks
 
 proper on boarding-process
