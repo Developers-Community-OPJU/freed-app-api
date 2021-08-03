@@ -17,10 +17,10 @@ module.exports = {
 
 
             if (!inChecklist) return res
-                .status(400).json({
+                .status(200).json({
                     msg: "Sorry, You Cannot Proceed to Checkout",
                     success: false
-                })  
+                })
 
             // console.log("checklist", inChecklist)
             // console.log("checkout", inCheckout)
