@@ -46,7 +46,7 @@ const RecordSchema = new mongoose.Schema({
         type: String,
         trim: true
     }
-});
+}, { timestamps: true });
 
 // VALIDATING STUDENT SCHEMA - ON LOGIN
 function VALIDATE_RECORD(record) {

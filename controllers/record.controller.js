@@ -146,15 +146,17 @@ module.exports = {
             const status = req.query.status;
 
             // finding the document and performing update 
-            let record = await RecordModel.findOneAndUpdate(
+            let record = await RecordModel.updateOne(
                 {
                     _id: req.params.id
                 },
                 { status })
 
+            record = await RecordModel.findOne({ _id: req.params.id })
+
             if (!record) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
 
-            record = await record.save();
+            // record = await record.save();
 
             // MARKING ON CHECKLIST IF ACCEPTED BY WARDEN
             if (record.status === "ACCEPTED") {
@@ -181,7 +183,7 @@ module.exports = {
             res
                 .status(200)
                 .json({
-                    msg: status,
+                    msg: record.status,
                     success: true,
                 })
 

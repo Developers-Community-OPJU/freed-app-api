@@ -17,7 +17,7 @@ const Student_Schema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'records'
     }]
-});
+}, { timestamps: true });
 
 // VALIDATING STUDENT SCHEMA - ON REGISTRATION
 function VALIDATE_REGISTER(user) {
