@@ -165,7 +165,7 @@ module.exports = {
                     record: record._id
                 })
 
-                console.log("user found in the checklist : ", found)
+                // console.log("user found in the checklist : ", found)
 
                 // if not in the list add to the list
                 if (!found) {
