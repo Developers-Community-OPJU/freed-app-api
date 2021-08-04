@@ -1,19 +1,18 @@
 const { Checklist } = require('../models/Checklist')
 const { Checkout } = require('../models/Checkout')
 const { Checkin } = require('../models/Checkin')
+const { RecordModel } = require('../models/RecordModel');
 
 module.exports = {
 
     CHECK_OUT: async (req, res) => {
         try {
-            // fetch studentid and record id
-            const student = req.body.student;
 
             // check if studentid in checklist
-            let inChecklist = await Checklist.findOne({ student })
+            let inChecklist = await Checklist.findOne({ record: req.body.recordId })
 
             // check if studentid in checkout
-            let inCheckout = await Checkout.findOne({ student })
+            let inCheckout = await Checkout.findOne({ record: req.body.recordId })
 
 
             if (!inChecklist) return res
@@ -21,9 +20,6 @@ module.exports = {
                     msg: "Sorry, You Cannot Proceed to Checkout",
                     success: false
                 })
-
-            // console.log("checklist", inChecklist)
-            // console.log("checkout", inCheckout)
 
             // *********** ************* ************** ******************
             //     if user already in checkout list -> perform checkin process

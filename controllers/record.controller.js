@@ -171,7 +171,7 @@ module.exports = {
 
                 // if not in the list add to the list
                 if (!found) {
-                    console.log("Adding user to the checklist")
+                    // console.log("Adding user to the checklist")
                     const checklist = await new Checklist({
                         student: record.studentId,
                         record: record._id
