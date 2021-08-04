@@ -146,7 +146,7 @@ module.exports = {
             const status = req.query.status;
 
             // finding the document and performing update 
-            const record = await RecordModel.findOneAndUpdate(
+            let record = await RecordModel.findOneAndUpdate(
                 {
                     _id: req.params.id
                 },
@@ -154,13 +154,12 @@ module.exports = {
 
             if (!record) return res.status(404).json({ msg: "Operation Failed! Please Try Again", success: false })
 
-            await record.save();
+            record = await record.save();
 
             // MARKING ON CHECKLIST IF ACCEPTED BY WARDEN
-            if (record.status == "ACCEPTED") {
+            if (record.status === "ACCEPTED") {
 
                 // checking if user already present in checklist
-
                 const found = await Checklist.findOne({
                     student: record.studentId,
                     record: record._id
@@ -175,7 +174,6 @@ module.exports = {
                         student: record.studentId,
                         record: record._id
                     })
-
                     await checklist.save()
                 }
             }
