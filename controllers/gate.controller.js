@@ -45,6 +45,7 @@ module.exports = {
                 if (removed) {
                     await checkin.save()
                     return res.json({
+                        checkedin: true,
                         msg: "Welcome, Great to have you back!",
                         success: true
                     })
@@ -63,6 +64,7 @@ module.exports = {
                 return res
                     .status(200)
                     .json({
+                        checkedout: true,
                         msg: "Hurray! Have a Great Journey :)",
                         success: true
                     })

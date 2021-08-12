@@ -1,9 +1,16 @@
+// const path = require('path')
+// const http = require('http')
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
 const config = require('config')
+const server = require('http').createServer(app)
+const io = require('socket.io')(server);
+
+// const public_path = path.join(__dirname, "../public")
+app.use(express.static('public'))
 
 // CONFIGURING CONFIG JWTPRIVATEKEY
 if (!config.get("jwtPrivateKey")) {
@@ -21,6 +28,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+app.get('/', (req, res) => {
+    res.send('/public/index.html');
+})
 
 const students = require('./routes/student')
 const records = require('./routes/records')
@@ -36,9 +46,30 @@ app.use('/api/auth', auth);
 app.use('/api/auth/admin', authAdmin);
 
 
+/////////////////////////////////////////////
+//    SOCKET cONNECTION FOR NOTIFICATIONS 
+/////////////////////////////////////////////
+
+
+io.on('connection', (socket) => {
+    console.log("New Socket Connection", socket.id)
+
+    // waiting for msg from admin
+    socket.on("msg from admin", (message) => {
+        var msg = "Reguest Accepted"
+        console.log("msg from student :: ", message)
+        // sending msg to student 
+        socket.emit('msg to student', msg)
+        io.emit('msg to student', message)
+    })
+});
+
+
+
+
 // establishing the server on the port 3000
 const port = process.env.PORT || 3000;
 const IP = process.env.IP;
-app.listen(port, IP, () => {
+server.listen(port, IP, () => {
     console.log(`Server Started on the port :: ${port} - ${IP}`);
 });
