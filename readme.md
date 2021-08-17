@@ -61,7 +61,6 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 }
 
 ## tasks
-
 proper on boarding-process
 profile
 
@@ -74,5 +73,9 @@ profile
 limited records / sem or / year
 no new leave record untill previous records are finalized
 
-profile
-Auth
+### NOTIFICATION CLIENT CONNECTION
+emit - > 'join' and pass { id of the student }  :  Connect to server
+on   - > 'msg to student' : listen for any noitification from admin
+
+### NOTIFICATION GATE APP CONNECTION
+emit - > 'msg from admin' and pass { id, name of the student }  :  send notification to the student
