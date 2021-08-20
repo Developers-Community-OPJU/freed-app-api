@@ -10,10 +10,8 @@ module.exports = {
 
             // check if studentid in checklist
             let inChecklist = await Checklist.findOne({ record: req.body.recordId })
-
             // check if studentid in checkout
             let inCheckout = await Checkout.findOne({ record: req.body.recordId })
-
 
             if (!inChecklist) return res
                 .status(200).json({
@@ -32,6 +30,8 @@ module.exports = {
                     record: inChecklist.record
                 });
 
+                console.log(inChecklist)
+
                 let removed = await Checkout.findOneAndRemove({
                     record: inChecklist.record
                 })
@@ -47,7 +47,10 @@ module.exports = {
                     return res.json({
                         checkedin: true,
                         msg: "Welcome, Great to have you back!",
-                        success: true
+                        success: true,
+                        data: {
+                            student: inChecklist.student
+                        }
                     })
                 }
 
@@ -66,7 +69,10 @@ module.exports = {
                     .json({
                         checkedout: true,
                         msg: "Hurray! Have a Great Journey :)",
-                        success: true
+                        success: true,
+                        data: {
+                            student: inChecklist.student
+                        }
                     })
             }
         }

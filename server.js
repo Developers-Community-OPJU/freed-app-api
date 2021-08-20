@@ -49,23 +49,22 @@ app.use('/api/auth/admin', authAdmin);
 /////////////////////////////////////////////
 //    SOCKET cONNECTION FOR NOTIFICATIONS 
 /////////////////////////////////////////////
-
+const { RecordModel } = require('./models/RecordModel');
 
 io.on('connection', (socket) => {
-    socket.on('join', (cred) => {
-        console.log("user connected with id : " + cred.id)
-        socket.join(cred.id)
-    })
-    // get noitification along with student id from the admin 
-
-    // send the noitification to the student with provided id
+    // connecting student
+    socket.on('join', (id) => {
+        socket.join(id)
+    });
 
     // waiting for msg from admin
-    socket.on("msg from admin", (msg) => {
-        console.log("msg from admin", msg.name)
-        console.log(msg.name + "'s Request Accepted")
-        const res = `Hey! ${msg.name} your request has been accepted`        // sending msg to student       
-        socket.broadcast.to(msg.id).emit('msg to student', res)
+    socket.on("msg from admin", (student) => {
+        // send the noitification to the student with provided id
+        // sending msg to student       
+        socket.broadcast.to(student.id).emit('msg to student', {
+            msg: student.msg,
+            success: true
+        })
     })
 });
 

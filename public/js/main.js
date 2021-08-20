@@ -1,27 +1,23 @@
 const socket = io();
 
-
-//CLIENT 
+const id = "6109de65a8529e00042a7fd8";
 
 // client needs to connect to admin
-socket.emit('join', {
-    id: "12345678",
-    Name: "Aman Vishwakarma",
-})
+socket.emit('join', id)
 
 socket.on("msg to student", (msg) => {
-    console.log("msg to student")
-    alert(msg)
+    console.log("msg to student from admin")
+    alert(msg.msg)
 
 })
 
-// ADMIN
 
+// ADMIN
 function sendMessage() {
     let message = document.querySelector("#input").value;
     socket.emit('msg from admin', {
-        id: "12345678",
-        name: "Aman Vishwakarma",
+        id: "6109de65a8529e00042a7fd8",
+        msg: "msg from the admin on checkout / checkin"
     })
 
 }
