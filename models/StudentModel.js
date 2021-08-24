@@ -13,6 +13,18 @@ const Student_Schema = new mongoose.Schema({
     branch: { type: String },
     course: { type: String },
     semester: { type: Number },
+    contact: {
+        personal: {
+            type: Number,
+            min: 10,
+            max: 10,    
+        },
+        guardian: {
+            type: Number,
+            min: 10,
+            max: 10,
+        },
+    },
     records: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'records'

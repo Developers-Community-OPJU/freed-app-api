@@ -10,11 +10,16 @@ module.exports = {
     UPDATE_STUDENT_PROFILE: async (req, res) => {
         try {
             // PARSING FORM DATA
-            const student = { firstName, lastName, email, course, semester, branch } = req.body;
-
+            let student = { firstName, lastName, email, course, semester, branch, contact } = req.body;
+            if (student.contact.personal == student.contact.guardian) {
+                res.json({
+                    msg: "Personal and Guardian contact can't be same!",
+                    success : false
+                })
+            }
             // FINDING STUDENT WITH ID
-            console.log(student)
-            await Student.findOneAndUpdate({ _id: req.body._id }, student)
+
+            student = await Student.findOneAndUpdate({ _id: req.body._id }, student)
 
             if (!student) {
                 return res

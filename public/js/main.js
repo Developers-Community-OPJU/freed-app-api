@@ -8,9 +8,7 @@ socket.emit('join', id)
 socket.on("msg to student", (msg) => {
     console.log("msg to student from admin")
     alert(msg.msg)
-
 })
-
 
 // ADMIN
 function sendMessage() {
