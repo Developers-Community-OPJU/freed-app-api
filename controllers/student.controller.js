@@ -10,11 +10,11 @@ module.exports = {
     UPDATE_STUDENT_PROFILE: async (req, res) => {
         try {
             // PARSING FORM DATA
-            let student = { firstName, lastName, email, course, semester, branch, contact } = req.body;
+            let student = { firstName, lastName, email, course, semester, branch, contact, room_no, gender } = req.body;
             if (student.contact.personal == student.contact.guardian) {
                 res.json({
                     msg: "Personal and Guardian contact can't be same!",
-                    success : false
+                    success: false
                 })
             }
             // FINDING STUDENT WITH ID

@@ -9,6 +9,10 @@ const Student_Schema = new mongoose.Schema({
     password: { type: String, bcrypt: true, minlength: 8, maxlength: 1024, required: true },
     firstName: { type: String, trim: true },
     lastName: { type: String, trim: true },
+    gender: {
+        type: String,
+        enum: ['M', 'F']
+    },
     email: { type: String, trim: true },
     branch: { type: String },
     course: { type: String },
@@ -17,13 +21,17 @@ const Student_Schema = new mongoose.Schema({
         personal: {
             type: Number,
             min: 10,
-            max: 10,    
+            max: 10,
         },
         guardian: {
             type: Number,
             min: 10,
             max: 10,
         },
+    },
+    room_no: {
+        type: String,
+        trim: true
     },
     records: [{
         type: mongoose.Schema.Types.ObjectId,
