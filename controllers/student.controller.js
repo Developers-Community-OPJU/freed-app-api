@@ -3,8 +3,6 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 
-
-
 module.exports = {
 
     UPDATE_STUDENT_PROFILE: async (req, res) => {
@@ -17,8 +15,8 @@ module.exports = {
                     success: false
                 })
             }
-            // FINDING STUDENT WITH ID
 
+            // FINDING STUDENT WITH ID
             student = await Student.findOneAndUpdate({ _id: req.body._id }, student)
 
             if (!student) {
@@ -29,13 +27,13 @@ module.exports = {
                         success: false,
                     });
             }
+
             res
                 .status(200).json({
                     msg: "Updated Successfully!",
                     success: true,
 
                 });
-
 
         } catch (error) {
             console.error(error)

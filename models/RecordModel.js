@@ -42,7 +42,11 @@ const RecordSchema = new mongoose.Schema({
         enum: ['ACCEPTED', 'DECLINED', 'PROCESS'],
         default: 'PROCESS'
     },
-    HODRemark: {
+    remark_by_warden: {
+        type: String,
+        trim: true
+    },
+    remark_by_hod: {
         type: String,
         trim: true
     }
