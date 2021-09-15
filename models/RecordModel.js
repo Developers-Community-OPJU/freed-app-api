@@ -43,13 +43,23 @@ const RecordSchema = new mongoose.Schema({
         default: 'PROCESS'
     },
     remark_by_warden: {
-        type: String,
-        trim: true
+        type: {
+            msg : String,
+            id : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'admin'
+            }
+        },          
     },
     remark_by_hod: {
-        type: String,
-        trim: true
-    }
+        type: {
+            msg : String,
+            id : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'admin'
+            }
+        },          
+    },
 }, { timestamps: true });
 
 // VALIDATING STUDENT SCHEMA - ON LOGIN

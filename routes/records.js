@@ -23,6 +23,8 @@ router.delete("/:id", recordController.CANCEL_REQUEST)
 //UPDATE STATUS
 router.put('/:id', recordController.UPDATE_STATUS)
 
+// ADD REMARK
+router.post('/:id/remark', recordController.ADD_REMARK)
 
 
 
