@@ -205,7 +205,7 @@ module.exports = {
         return res
           .status(404)
           .json({ msg: "Operation Failed! Please Try Again", success: false });
-      console.log(admin)
+      
 
       // check if the record is valid
       record = await RecordModel.findOne({ _id: req.params.id });
