@@ -16,6 +16,7 @@ create models - student - admin - superadmin
 [x][post] - api/records/new - request new leave
 [x][delete] - api/records/:id - cancel request
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action for admin
+[x][post] - api/records/:id/remark - add remark   body : { msg : "decline msg goes here", by : id of the admin user}
 
 ### PROFILE
 
@@ -50,6 +51,7 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 
 ### ADMIN ROUTES
 
+[x][get] - api/admin/list - get all admin users
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
 
 ### GATEWAY - CHECKIN-CHECKOUT ROUTES
