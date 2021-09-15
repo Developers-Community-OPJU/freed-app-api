@@ -216,7 +216,7 @@ module.exports = {
 
       switch (admin.adminIs) {
         case "WARDEN":
-          RecordModel.updateOne(
+          await RecordModel.updateOne(
             {
               _id: req.params.id,
             },
@@ -225,14 +225,14 @@ module.exports = {
               "remark_by_warden.by": by,
             }
           );
-          return res.status(200).json({
+          res.status(200).json({
             success: true,
             msg: "Warden has added the remark",
           });
-          break;
+          break;  
 
         case "HOD":
-          RecordModel.updateOne(
+          await RecordModel.updateOne(
             {
               _id: req.params.id,
             },
@@ -241,8 +241,7 @@ module.exports = {
               "remark_by_hod.by": by,
             }
           );
-
-          return res.status(200).json({
+          res.status(200).json({
             success: true,
             msg: "HOD has added the remark",
           });
