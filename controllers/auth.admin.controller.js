@@ -101,7 +101,7 @@ module.exports = {
             try {
                 // checking duplicate user
                 decoded = await Admin.findOne({ _id: decoded._id })
-                    .select('-password -__v -records')
+                    .select('-password -__v')
                 if (decoded) {
                     res.json({
                         success: true,

@@ -46,7 +46,7 @@ send token in headers as - [x-leave-auth-token] : token_value
 
 [x][post] - api/auth/admin/register
 [x][post] - api/auth/admin/login
-[x][post] - api/auth/spread_token
+[x][post] - api/auth/admin/spread_token
 send token in headers as - [x-admin-auth-token] : "pass token here"
 
 ### ADMIN ROUTES
