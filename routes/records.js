@@ -26,8 +26,6 @@ router.put('/:id', recordController.UPDATE_STATUS)
 // ADD REMARK
 router.post('/:id/remark', recordController.ADD_REMARK)
 
-
-
 // GET RECORD WITH ID and STUDENT ID
 // router.get('/:recordId/:RID', recordController.GET_STUDENT_RECORD);
 

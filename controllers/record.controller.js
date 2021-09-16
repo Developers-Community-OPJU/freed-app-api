@@ -74,8 +74,14 @@ module.exports = {
         _id: req.params.id,
       }).populate({
         path: "studentId",
-        select: "-password -__V -records",
-      });
+        select: "-password -__V -records",         
+      })
+      .populate({ 
+        path: 'remark_by_warden.by',
+        select : 'firstname lastname contact _id adminIs',
+        model : "admin"        
+     })
+      
 
       if (!record)
         return res

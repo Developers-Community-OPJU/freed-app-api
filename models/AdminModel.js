@@ -7,13 +7,13 @@ const config = require('config');
 const Admin_Schema = new mongoose.Schema({
     username: { type: String, required: true, unique: true, trim: true, minlength: 6, maxlength: 255 },
     password: { type: String, bcrypt: true, minlength: 8, maxlength: 1024, required: true },
-    firstName: { type: String, trim: true },
-    lastName: { type: String, trim: true },
+    firstname: { type: String, trim: true },
+    lastname: { type: String, trim: true },
     email: { type: String, trim: true, unique: true },
     contact: { type: Number, trim: true },
     adminIs: {
         type: String,
-        enum: ["HOD", "WARDEN"],
+        enum: ["HOD", "WARDEN","COMMON", "SUPER"],
         default: "WARDEN"
     }
 });
@@ -22,8 +22,12 @@ const Admin_Schema = new mongoose.Schema({
 // VALIDATING ADMIN SCHEMA - ON LOGIN 
 function VALIDATE_REGISTER(user) {
     const schema = Joi.object({
+        firstname: Joi.string().required(),
+        lastname: Joi.string(),
         username: Joi.string().required(),
-        email: Joi.string().required().email(),
+        adminIs: Joi.string().required(),
+        contact: Joi.number().required(),
+        email: Joi.string().email().required(),
         password: Joi.string().required().min(6).max(1024)
     });
 
@@ -33,7 +37,7 @@ function VALIDATE_REGISTER(user) {
 // VALIDATING ADMIN SCHEMA - REGISTER
 function VALIDATE_LOGIN(user) {
     const schema = Joi.object({
-        username: Joi.string().required(),
+        id: Joi.string().required(),
         password: Joi.string().required().min(6).max(1024)
     });
 
