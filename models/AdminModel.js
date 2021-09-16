@@ -24,6 +24,7 @@ function VALIDATE_REGISTER(user) {
     const schema = Joi.object({
         firstname: Joi.string().required(),
         lastname: Joi.string(),
+        hostel: Joi.string(),
         username: Joi.string().required(),
         adminIs: Joi.string().required(),
         contact: Joi.number().required(),
