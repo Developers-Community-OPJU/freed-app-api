@@ -38,7 +38,7 @@ function VALIDATE_REGISTER(user) {
 // VALIDATING ADMIN SCHEMA - REGISTER
 function VALIDATE_LOGIN(user) {
     const schema = Joi.object({
-        id: Joi.string().required(),
+        username: Joi.string().required(),
         password: Joi.string().required().min(6).max(1024)
     });
 
