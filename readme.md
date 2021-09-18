@@ -25,7 +25,7 @@ body : {
 
 ### PROFILE
 
-[x][post] - api/student/update - update student profile
+* [x][post] - api/student/update - update student profile
 send req body as as follows -
 
 # note make sure validate for each key not to be empty overwrite values are allowed.
@@ -42,28 +42,28 @@ send req body as as follows -
 
 ### AUTH - student
 
-[x][post] - api/auth/register/student
-[x][post] - api/auth/login/student
-[x][post] - api/auth/spread_token
+ * [x][post] - api/auth/register/student
+ * [x][post] - api/auth/login/student
+ * [x][post] - api/auth/spread_token
 send token in headers as - [x-leave-auth-token] : token_value
 
 ### AUTH - admin
 
-[x][post] - api/auth/admin/register
-[x][post] - api/auth/admin/login
-[x][post] - api/auth/admin/spread_token
+ * [x][post] - api/auth/admin/register
+ * [x][post] - api/auth/admin/login
+ * [x][post] - api/auth/admin/spread_token
 send token in headers as - [x-admin-auth-token] : "pass token here"
 
 ### ADMIN ROUTES
 
-[x][get] - api/admin/list - get all admin users
-[x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
-[x][get] - /api/admin/fetch/:adminId  
+* [x][get] - api/admin/list - get all admin users
+* [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update * action
+* [x][get] - /api/admin/fetch/:adminId  
 
 ### GATEWAY - CHECKIN-CHECKOUT ROUTES
 
-[x][get] - /api/gateway/checklist - list all the checklist
-[x][post] - /api/gateway/checkout - perform checkin and checkout
+* [x][get] - /api/gateway/checklist - list all the checklist
+* [x][post] - /api/gateway/checkout - perform checkin and checkout
 {
 "student" : "60eb41009f076b0004abe4a4"
 }
@@ -71,29 +71,29 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 
 ### ADMIN
 
-[] get notified for new leave
-[] list all the leaves
-[] perform action on the leave
+* [] get notified for new leave
+* [] list all the leaves
+* [] perform action on the leave
 
 limited records / sem or / year
 no new leave record untill previous records are finalized
 
 ### NOTIFICATION CLIENT CONNECTION
 
-emit - > 'join' and pass { id of the student } : Connect to server
-on - > 'msg to student' : listen for any noitification from admin
+* emit - > 'join' and pass { id of the student } : Connect to server
+* on - > 'msg to student' : listen for any noitification from admin
 
 ### NOTIFICATION GATE APP CONNECTION
 
-emit - > 'msg from admin' and pass { id, name of the student } : send notification to the student
+* emit - > 'msg from admin' and pass { id, name of the student } : send notification to the student
 
 
 
 ## tasks
 
-proper on boarding-process
-profile
-improove ui feedback
+* proper on boarding-process
+* profile
+* improove ui feedback
 
 <!--  changes made -->
 - Record Model :  studentid - > student
