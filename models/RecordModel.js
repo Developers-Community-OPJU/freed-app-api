@@ -3,7 +3,7 @@ const Joi = require('joi');
 
 
 const RecordSchema = new mongoose.Schema({
-    studentId: {
+    student: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "students",
         required: true
@@ -50,23 +50,52 @@ const RecordSchema = new mongoose.Schema({
                 ref: 'admin'
             }
         },          
-    },
-    remark_by_hod: {
-        type: {
-            msg : String,
-            id : {
+    },    
+    approval : {
+        type : {      
+            // approved if hod accepts the approval request     
+            approved : {
+                type : Boolean,
+                default : false
+            },
+            // tracking who approved the request
+            approved_by : {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'admin'
-            }
-        },          
-    },
+            },
+            // flag for approval initiated
+            sent_for_approval : {
+                type : Boolean,
+                default : false
+            },
+            // approval requested by
+            sent_for_approval_by : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'admin'
+            },
+            // status for approval
+            declined : {
+                type : Boolean,
+                default : false
+            },
+            // tracking who declined the request
+            declined_by : {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'admin'
+            },
+            // adding remark if requset gets declined
+            remark : {
+                type : String,
+            }            
+        }        
+    }
 }, { timestamps: true });
 
 // VALIDATING STUDENT SCHEMA - ON LOGIN
 function VALIDATE_RECORD(record) {
     const schema = Joi.object({
         RID: Joi.string().required(),
-        studentId: Joi.required(),
+        student: Joi.required(),
         from: Joi.date().required(),
         to: Joi.date().required(),
         destination: Joi.string().required(),

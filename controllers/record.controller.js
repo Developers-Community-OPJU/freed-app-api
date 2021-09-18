@@ -2,6 +2,7 @@ const { json } = require("body-parser");
 const { RecordModel, VALIDATE_RECORD } = require("../models/RecordModel");
 const { Admin } = require("../models/AdminModel");
 const { Checklist } = require("../models/Checklist");
+const { exist } = require("joi");
 
 module.exports = {
   // LIST ALL LEAVE FORMS
@@ -51,7 +52,7 @@ module.exports = {
   GET_RECORDS: async (req, res) => {
     try {
       const records = await RecordModel.find({
-        studentId: req.params.studentId,
+        student: req.params.studentId,
       });
 
       if (records.length == 0)
@@ -72,16 +73,16 @@ module.exports = {
     try {
       const record = await RecordModel.findOne({
         _id: req.params.id,
-      }).populate({
-        path: "studentId",
-        select: "-password -__V -records",         
       })
-      .populate({ 
-        path: 'remark_by_warden.by',
-        select : 'firstname lastname contact _id adminIs',
-        model : "admin"        
-     })
-      
+        .populate({
+          path: "student",
+          select: "-password -__V -records",
+        })
+        .populate({
+          path: "remark_by_warden.by",
+          select: "firstname lastname contact _id adminIs",
+          model: "admin",
+        });
 
       if (!record)
         return res
@@ -100,8 +101,7 @@ module.exports = {
   // APPLY FOR NEW LEAVE FORM
   REQUEST_NEW_RECORD: async (req, res) => {
     try {
-      let record = ({ from, to, reason, destination, RID, studentId } =
-        req.body);
+      let record = ({ from, to, reason, destination, RID, student } = req.body);
 
       // VALIDATING THE RECORD
       const { error } = VALIDATE_RECORD(record);
@@ -169,7 +169,7 @@ module.exports = {
       if (record.status === "ACCEPTED") {
         // checking if user already present in checklist
         const found = await Checklist.findOne({
-          student: record.studentId,
+          student: record.student,
           record: record._id,
         });
 
@@ -179,7 +179,7 @@ module.exports = {
         if (!found) {
           // console.log("Adding user to the checklist")
           const checklist = await new Checklist({
-            student: record.studentId,
+            student: record.student,
             record: record._id,
           });
           await checklist.save();
@@ -211,7 +211,6 @@ module.exports = {
         return res
           .status(404)
           .json({ msg: "Operation Failed! Please Try Again", success: false });
-      
 
       // check if the record is valid
       record = await RecordModel.findOne({ _id: req.params.id });
@@ -235,27 +234,63 @@ module.exports = {
             success: true,
             msg: "Warden has added the remark",
           });
-          break;  
-
-        case "HOD":
-          await RecordModel.updateOne(
-            {
-              _id: req.params.id,
-            },
-            {
-              "remark_by_hod.msg": msg,
-              "remark_by_hod.by": by,
-            }
-          );
-          res.status(200).json({
-            success: true,
-            msg: "HOD has added the remark",
-          });
-
           break;
+
+        // case "HOD":
+        //   await RecordModel.updateOne(
+        //     {
+        //       _id: req.params.id,
+        //     },
+        //     {
+        //       "remark_by_hod.msg": msg,
+        //       "remark_by_hod.by": by,
+        //     }
+        //   );
+        //   res.status(200).json({
+        //     success: true,
+        //     msg: "HOD has added the remark",
+        //   });
+
+        //   break;
       }
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  REQUEST_APPROVAL: async (req, res) => {
+    try {
+      const { recordId, wardenId } = req.body;   
+
+      // check if the record exists
+      let record = await RecordModel.findOne({ _id: recordId });
+
+      if (!record)
+        return res
+          .status(404)
+          .json({ mag: "record not found!", success: false });
+
+
+      // update the record 
+      const result = await RecordModel.updateOne(
+        { _id: recordId },
+        {
+          "approval.sent_for_approval": true,
+          "approval.sent_for_approval_by": wardenId,
+        }
+      );
+
+      res.status(200).json({
+        msg: "Requested for Approval",
+        success : true,
+        result,
+      });
+
+    } catch (error) {
+      console.error(error);
+      res.json({
+        error,
+      });
     }
   },
 };

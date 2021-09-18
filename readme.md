@@ -17,6 +17,11 @@ create models - student - admin - superadmin
 [x][delete] - api/records/:id - cancel request
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action for admin
 [x][post] - api/records/:id/remark - add remark   body : { msg : "decline msg goes here", by : id of the admin user}
+[x][post] - /api/records/request-approval 
+body : {
+    "recordId" : "61463ded06af3a0ab4522525",
+    "wardenId" : "6143882dd3a99860494961df"
+}
 
 ### PROFILE
 
@@ -53,6 +58,7 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 
 [x][get] - api/admin/list - get all admin users
 [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action
+[x][get] - /api/admin/fetch/:adminId  
 
 ### GATEWAY - CHECKIN-CHECKOUT ROUTES
 
@@ -62,10 +68,6 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 "student" : "60eb41009f076b0004abe4a4"
 }
 
-## tasks
-
-proper on boarding-process
-profile
 
 ### ADMIN
 
@@ -84,3 +86,16 @@ on - > 'msg to student' : listen for any noitification from admin
 ### NOTIFICATION GATE APP CONNECTION
 
 emit - > 'msg from admin' and pass { id, name of the student } : send notification to the student
+
+
+
+## tasks
+
+proper on boarding-process
+profile
+improove ui feedback
+
+<!--  changes made -->
+- Record Model :  studentid - > student
+- Record Model :  removed the "remark_by_hod" field
+

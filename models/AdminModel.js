@@ -5,7 +5,7 @@ const config = require('config');
 
 // STUDENT MODEL
 const Admin_Schema = new mongoose.Schema({
-    username: { type: String, required: true, unique: true, trim: true, minlength: 6, maxlength: 255 },
+    employeeCode: { type: String, required: true, unique: true, trim: true, minlength: 6, maxlength: 255 },
     password: { type: String, bcrypt: true, minlength: 8, maxlength: 1024, required: true },
     firstname: { type: String, trim: true },
     lastname: { type: String, trim: true },
@@ -15,21 +15,26 @@ const Admin_Schema = new mongoose.Schema({
         type: String,
         enum: ["HOD", "WARDEN","COMMON", "SUPER"],
         default: "WARDEN"
-    }
+    },
+    department: {
+        type: String,
+        enum: ["BOYS_HOSTEL", "GIRLS_HOSTEL","CSE","MECH","META","EEE","COMMON"],
+        required : true              
+    } 
 });
 
 
 // VALIDATING ADMIN SCHEMA - ON LOGIN 
 function VALIDATE_REGISTER(user) {
     const schema = Joi.object({
+        employeeCode: Joi.string().required(),
+        password: Joi.string().required().min(6).max(1024),
         firstname: Joi.string().required(),
         lastname: Joi.string(),
-        hostel: Joi.string(),
-        username: Joi.string().required(),
-        adminIs: Joi.string().required(),
-        contact: Joi.number().required(),
         email: Joi.string().email().required(),
-        password: Joi.string().required().min(6).max(1024)
+        contact: Joi.number().required(),
+        adminIs: Joi.string().required(),
+        department: Joi.string(),
     });
 
     return schema.validate(user);
@@ -38,7 +43,7 @@ function VALIDATE_REGISTER(user) {
 // VALIDATING ADMIN SCHEMA - REGISTER
 function VALIDATE_LOGIN(user) {
     const schema = Joi.object({
-        username: Joi.string().required(),
+        employeeCode: Joi.string().required(),
         password: Joi.string().required().min(6).max(1024)
     });
 
@@ -46,7 +51,7 @@ function VALIDATE_LOGIN(user) {
 }
 
 Admin_Schema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ username: this.username, _id: this._id, adminIs: this.adminIs }, config.get("jwtPrivateKey"))
+    const token = jwt.sign({ employeeCode: this.employeeCode, _id: this._id, adminIs: this.adminIs }, config.get("jwtPrivateKey"))
     return token;
 }
 

@@ -18,7 +18,7 @@ const Student_Schema = new mongoose.Schema({
     course: { type: String },
     semester: { type: Number },
     contact: {
-        personal: {
+        personal: {            
             type: Number,
             min: 10,
             max: 10,

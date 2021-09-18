@@ -9,6 +9,7 @@ module.exports = {
         try {
             // PARSING FORM DATA
             let student = { firstName, lastName, email, course, semester, branch, contact, room_no, gender } = req.body;
+            
             if (student.contact.personal == student.contact.guardian) {
                 res.json({
                     msg: "Personal and Guardian contact can't be same!",

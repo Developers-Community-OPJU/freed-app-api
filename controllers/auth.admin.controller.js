@@ -9,8 +9,8 @@ module.exports = {
     LOGIN_ADMIN: async (req, res) => {
         try {
             // PARSING FORM DATA
-            let { username, password } = req.body;
-            console.log(username, password)
+            let { employeeCode, password } = req.body;
+            console.log(employeeCode, password)
             // VALIDATING THE REQ
             const { error } = VALIDATE_LOGIN(req.body);
             if (error) return res
@@ -19,7 +19,7 @@ module.exports = {
 
             // FINDING STUDENT WITH RID
 
-            const admin = await Admin.findOne({ username })
+            const admin = await Admin.findOne({ employeeCode })
             if (!admin) {
                 return res
                     .status(401)
@@ -41,6 +41,7 @@ module.exports = {
             // GENERATING TOKEN
             const token = admin.generateAuthToken();
 
+            // SENDING THE RESPONSE
             res
                 .status(200).json({
                     msg: "Logged In Successfully!",
@@ -59,7 +60,7 @@ module.exports = {
 
             // PARSING AND FORMATING FORM DATA
             let admin_data = {
-                username: req.body.username,
+                employeeCode: req.body.employeeCode,
                 email: req.body.email,
                 password: req.body.password,
             }
@@ -71,7 +72,7 @@ module.exports = {
                 .json({ msg: "Validation Failed", error: error.details[0].message });
 
             //CHECKING DUPLICATE USER
-            let admin = await Admin.findOne({ username: admin_data.username });
+            let admin = await Admin.findOne({ employeeCode: admin_data.employeeCode });
             if (admin) { return res.json({ msg: "Already Registered!", success: false }) }
 
             admin = new Admin(admin_data)
