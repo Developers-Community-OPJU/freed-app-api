@@ -17,7 +17,7 @@ create models - student - admin - superadmin
 * [x][delete] - api/records/:id - cancel request
 * [x][put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action for admin
 * [x][post] - api/records/:id/remark - add remark   body : { msg : "decline msg goes here", by : id of the admin user}
-* [x][post] - /api/records/request-approval 
+* [:white_check_mark:][post] - /api/records/request-approval 
 body : {
     "recordId" : "61463ded06af3a0ab4522525",
     "wardenId" : "6143882dd3a99860494961df"
