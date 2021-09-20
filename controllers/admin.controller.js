@@ -21,9 +21,9 @@ module.exports = {
       let records = await RecordModel.find({})
         .populate({
           path: "student",
-          select: "branch",
+          select: "branch from status",
         })
-        .select("student");
+        .select("student approval from");
 
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
       records = records.filter((record) => {
@@ -117,19 +117,5 @@ module.exports = {
       console.error(error);
       res.send(error);
     }
-  },
-
-  DECLINE_BY_HOD: async (req, res) => {
-    try {
-
-      // CHECK IF STATUS IS DECLINED 
-      // UPDATE THE RECORD.APPROVAL = REMARK_by_HOD -> req.body.remark
-
-      
-
-    } catch (error) {
-      console.log(error);
-      res, send(error);
-    }
-  },
+  },  
 };

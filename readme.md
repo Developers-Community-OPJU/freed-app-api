@@ -31,9 +31,6 @@ body : {
     "adminId" : "6143882dd3a99860494961df"
 }
 
-
-
-
 ### PROFILE
 
 * :white_check_mark: - [post] - api/student/update - update student profile
@@ -79,7 +76,6 @@ send token in headers as - [x-admin-auth-token] : "pass token here"
 "student" : "60eb41009f076b0004abe4a4"
 }
 
-
 ### ADMIN
 
 * [] get notified for new leave
@@ -98,8 +94,6 @@ no new leave record untill previous records are finalized
 
 * emit - > 'msg from admin' and pass { id, name of the student } : send notification to the student
 
-
-
 ## tasks
 
 * proper on boarding-process
@@ -109,7 +103,6 @@ no new leave record untill previous records are finalized
 <!--  changes made -->
 - Record Model :  studentid - > student
 - Record Model :  removed the "remark_by_hod" field
-
 
 TODAYS TASK
  [x]- CONFIRM DIALOG 

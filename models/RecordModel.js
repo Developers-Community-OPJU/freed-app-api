@@ -1,7 +1,45 @@
 const mongoose = require('mongoose');
 const Joi = require('joi');
 
+// ApprovalScehma
+const ApprovalSchema = new mongoose.Schema({    
+        // approved if hod accepts the approval request     
+        accepted : {
+            type : Boolean,
+            default : false
+        },
+        // tracking who approved the request
+        accepted_by : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'admin'
+        },
+        // flag for approval initiated
+        sent_for_approval : {
+            type : Boolean,
+            default : false
+        },
+        // approval requested by
+        sent_for_approval_by : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'admin'
+        },
+        // status for approval
+        declined : {
+            type : Boolean,
+            default : false
+        },
+        // tracking who declined the request
+        declined_by : {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'admin'
+        },
+        // adding remark if requset gets declined
+        remark : {
+            type : String,
+        }
+  })
 
+  // Record Schema
 const RecordSchema = new mongoose.Schema({
     student: {
         type: mongoose.Schema.Types.ObjectId,
@@ -51,45 +89,10 @@ const RecordSchema = new mongoose.Schema({
             }
         },          
     },    
-    approval : {
-        type : {      
-            // approved if hod accepts the approval request     
-            accepted : {
-                type : Boolean,
-                default : false
-            },
-            // tracking who approved the request
-            accepted_by : {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'admin'
-            },
-            // flag for approval initiated
-            sent_for_approval : {
-                type : Boolean,
-                default : false
-            },
-            // approval requested by
-            sent_for_approval_by : {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'admin'
-            },
-            // status for approval
-            declined : {
-                type : Boolean,
-                default : false
-            },
-            // tracking who declined the request
-            declined_by : {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'admin'
-            },
-            // adding remark if requset gets declined
-            remark : {
-                type : String,
-            }            
-        }        
-    }
+    approval : ApprovalSchema
 }, { timestamps: true });
+
+
 
 // VALIDATING STUDENT SCHEMA - ON LOGIN
 function VALIDATE_RECORD(record) {
