@@ -82,7 +82,22 @@ module.exports = {
           path: "remark_by_warden.by",
           select: "firstname lastname contact _id adminIs",
           model: "admin",
-        });
+        })
+        .populate({
+          path: "approval.sent_for_approval_by",
+          select: "firstname lastname contact email",
+          model: "admin",
+        }) 
+        .populate({
+          path: "approval.accepted_by",
+          select: "firstname lastname contact email",
+          model: "admin",
+        }) 
+        .populate({
+          path: "approval.declined_by",
+          select: "firstname lastname contact email",
+          model: "admin",
+        })       
 
       if (!record)
         return res
