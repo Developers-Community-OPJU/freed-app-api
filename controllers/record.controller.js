@@ -101,8 +101,12 @@ module.exports = {
   // APPLY FOR NEW LEAVE FORM
   REQUEST_NEW_RECORD: async (req, res) => {
     try {
+      // CHECKIN IF THE DEVICE ID IS PROVIDED 
+      const device = req.header("x-device-id");
+      if(!device) return res.status(403).json({ msg : "Forbidden!", success : false})
+      
       let record = ({ from, to, reason, destination, RID, student } = req.body);
-
+      record.device_id = device;
       // VALIDATING THE RECORD
       const { error } = VALIDATE_RECORD(record);
       if (error)
@@ -111,7 +115,7 @@ module.exports = {
         });
 
       // NEW RECORD
-      let leave = new RecordModel(record);
+      let leave = new RecordModel(record);     
 
       // SAVING THE RECORD
       const result = await leave.save();

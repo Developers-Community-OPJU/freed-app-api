@@ -46,6 +46,11 @@ const RecordSchema = new mongoose.Schema({
         ref: "students",
         required: true
     },
+    device_id : {
+        type : String,
+        default : null,
+        required : true
+    },
     RID: {
         type: String,
         trim: true,
@@ -102,7 +107,8 @@ function VALIDATE_RECORD(record) {
         from: Joi.date().required(),
         to: Joi.date().required(),
         destination: Joi.string().required(),
-        reason: Joi.string().max(200).required()
+        reason: Joi.string().max(200).required(),
+        device_id: Joi.string().required(),
     });
     return schema.validate(record);
 }
