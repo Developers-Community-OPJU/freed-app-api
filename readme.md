@@ -1,9 +1,4 @@
-# TODOS
-
-================
-create models - student - admin - superadmin
-
-## SERVER API
+##  FREED APP - SERVER API
 
 # BASE_URL = "https://dco-leave-app-api.herokuapp.com/"
 
@@ -17,13 +12,27 @@ create models - student - admin - superadmin
 * :white_check_mark: - [delete] - api/records/:id - cancel request
 * :white_check_mark: - [put] - api/records/:id?status=['ACCEPTED',"DECLINED"] - permit update action for admin
 * :white_check_mark: - [post] - api/records/:id/remark - add remark   body : { msg : "decline msg goes here", by : id of the admin user} x
-* :white_check_mark: - [post] - /api/records/request-approval 
-
-
+* :white_check_mark: - [post] - /api/records/approval-request 
 body : {
     "recordId" : "61463ded06af3a0ab4522525",
     "wardenId" : "6143882dd3a99860494961df"
 }
+
+* :white_check_mark: - [post] - /api/records/approval-decline 
+body : {
+    "recordId" : "61463ded06af3a0ab4522525",
+    "adminId" : "6143882dd3a99860494961df",
+    remark : ""
+}
+
+* :white_check_mark: - [post] - /api/records/approval-accept 
+body : {
+    "recordId" : "61463ded06af3a0ab4522525",
+    "adminId" : "6143882dd3a99860494961df"
+}
+
+
+
 
 ### PROFILE
 
@@ -100,4 +109,17 @@ no new leave record untill previous records are finalized
 <!--  changes made -->
 - Record Model :  studentid - > student
 - Record Model :  removed the "remark_by_hod" field
+
+
+TODAYS TASK
+ - CONFIRM DIALOG 
+ - CONNECTION TO THE APPROVAL API
+
+ - DECLINE AND ADD REMARK BY HOD - API 
+ - ACCEPT APPROVAL BY HOD - API 
+
+
+ <!-- new changes -->
+ - routes changes from 
+        request-approval -> approval-request
 

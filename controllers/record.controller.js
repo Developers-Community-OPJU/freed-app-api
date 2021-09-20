@@ -235,7 +235,6 @@ module.exports = {
             msg: "Warden has added the remark",
           });
           break;
-
         // case "HOD":
         //   await RecordModel.updateOne(
         //     {
@@ -260,7 +259,7 @@ module.exports = {
 
   REQUEST_APPROVAL: async (req, res) => {
     try {
-      const { recordId, wardenId } = req.body;   
+      const { recordId, wardenId } = req.body;
 
       // check if the record exists
       let record = await RecordModel.findOne({ _id: recordId });
@@ -270,8 +269,7 @@ module.exports = {
           .status(404)
           .json({ mag: "record not found!", success: false });
 
-
-      // update the record 
+      // update the record
       const result = await RecordModel.updateOne(
         { _id: recordId },
         {
@@ -282,15 +280,89 @@ module.exports = {
 
       res.status(200).json({
         msg: "Requested for Approval",
-        success : true,
+        success: true,
         result,
       });
-
     } catch (error) {
       console.error(error);
       res.json({
         error,
       });
+    }
+  },
+
+  DECLINE_APPROVAL: async (req, res) => {
+    try {
+      // check if the admin is hod
+      const { adminId, recordId, remark } = req.body;
+      const admin = await Admin.findOne({ _id: adminId });
+      if (!admin && admin.adminIs == "HOD")
+        return res.status(403).json({ msg: "Forbidden!", success: false });
+
+      // get record id
+      let record = await RecordModel.findOne({ _id: recordId });
+      console.log(record);
+      if (!record)
+        return res
+          .status(404)
+          .json({ msg: "record not found", success: false });
+
+      // updating the record
+      // update the approval status    
+
+      const result = await RecordModel.updateOne(
+        { _id: recordId },
+        {
+          "approval.declined": true,
+          "approval.declined_by": admin._id,
+          "approval.remark": remark,
+        }
+      );
+
+      res.status(200).json({
+        msg: "Approval Declined",
+        success: true,
+      });
+
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  },
+  ACCEPT_APPROVAL: async (req, res) => {
+    try {
+      // check if the admin is hod
+      const { adminId, recordId } = req.body;
+      const admin = await Admin.findOne({ _id: adminId });
+      if (!admin && admin.adminIs == "HOD")
+        return res.status(403).json({ msg: "Forbidden!", success: false });
+
+      // get record id
+      const record = await RecordModel.findOne({ _id: recordId });
+      if (!record)
+        return res
+          .status(404)
+          .json({ msg: "Record not found", success: false });
+
+      // updating the record
+      // update the approval status
+     
+      await RecordModel.updateOne(
+        { _id: recordId },
+        {
+          "approval.accepted": true,
+          "approval.accepted_by": admin._id       
+        }
+      );
+
+      res.status(200).json({
+        msg: "Record Approved",
+        success: true,    
+      });
+
+    } catch (error) {
+      console.log(error);
+      res.json(error);
     }
   },
 };

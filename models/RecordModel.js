@@ -54,12 +54,12 @@ const RecordSchema = new mongoose.Schema({
     approval : {
         type : {      
             // approved if hod accepts the approval request     
-            approved : {
+            accepted : {
                 type : Boolean,
                 default : false
             },
             // tracking who approved the request
-            approved_by : {
+            accepted_by : {
                 type: mongoose.Schema.Types.ObjectId,
                 ref: 'admin'
             },

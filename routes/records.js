@@ -27,7 +27,15 @@ router.put('/:id', recordController.UPDATE_STATUS)
 router.post('/:id/remark', recordController.ADD_REMARK)
 
 // REQUSET FOR APPROVAL BY WARDEN
-router.post('/request-approval', recordController.REQUEST_APPROVAL)
+router.post('/approval-request', recordController.REQUEST_APPROVAL)
+
+// APPROVAL ROUTES BY HOD
+
+// DECLINE BY HOD AND ADDING REMARK
+router.post('/approval-decline', recordController.DECLINE_APPROVAL)
+
+// ACCEPT APPROvAL BY HOD 
+router.post('/approval-accept', recordController.ACCEPT_APPROVAL)
 
 // GET RECORD WITH ID and STUDENT ID
 // router.get('/:recordId/:RID', recordController.GET_STUDENT_RECORD);

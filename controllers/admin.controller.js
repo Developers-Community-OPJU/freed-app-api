@@ -5,27 +5,26 @@ const bcrypt = require("bcryptjs");
 module.exports = {
   GET_HOD_RECORDS: async (req, res) => {
     try {
-
-      const { admin_id } = req.params;      
+      const { admin_id } = req.params;
 
       // GET ADMIN AND VERIFY IF IT EXISTS
       const admin = await Admin.findOne({
         _id: admin_id,
-      });    
+      });
 
       if (!admin)
-      return res
-      .status(404)
-      .json({ msg: "Something went wrong", success: false });
-      
+        return res
+          .status(404)
+          .json({ msg: "Something went wrong", success: false });
+
       //  get all the records
       let records = await RecordModel.find({})
-      .populate({
-        path: "student",
-        select: "branch",
-      })
-      .select("student");
-      
+        .populate({
+          path: "student",
+          select: "branch",
+        })
+        .select("student");
+
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
       records = records.filter((record) => {
         return record.student.branch == admin.department;
@@ -117,6 +116,20 @@ module.exports = {
     } catch (error) {
       console.error(error);
       res.send(error);
+    }
+  },
+
+  DECLINE_BY_HOD: async (req, res) => {
+    try {
+
+      // CHECK IF STATUS IS DECLINED 
+      // UPDATE THE RECORD.APPROVAL = REMARK_by_HOD -> req.body.remark
+
+      
+
+    } catch (error) {
+      console.log(error);
+      res, send(error);
     }
   },
 };

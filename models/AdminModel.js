@@ -34,7 +34,7 @@ function VALIDATE_REGISTER(user) {
         email: Joi.string().email().required(),
         contact: Joi.number().required(),
         adminIs: Joi.string().required(),
-        department: Joi.string(),
+        department: Joi.string().required(),
     });
 
     return schema.validate(user);

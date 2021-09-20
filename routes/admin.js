@@ -11,5 +11,9 @@ router.post('/add-user', adminController.ADD_NEW_USER)
 // DASHBOARD ADMIN DATA FETCH
 router.get('/fetch/:admin_id', adminController.GET_HOD_RECORDS)
 
+// DECLINE AND ADDING REMARK BY HOD
+router.post('/add-user', adminController.ADD_NEW_USER)
+
+
 
 module.exports = router;
