@@ -18,7 +18,9 @@ module.exports = {
           .json({ msg: "Something went wrong", success: false });
 
       //  get all the records
-      let records = await RecordModel.find({})
+      let records = await RecordModel.find({
+        'approval.sent_for_approval' : true
+      })
         .populate({
           path: "student",
           select: "branch from status",
