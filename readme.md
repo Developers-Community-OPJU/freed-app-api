@@ -112,14 +112,16 @@ no new leave record untill previous records are finalized
 
 
 TODAYS TASK
- - CONFIRM DIALOG 
- - CONNECTION TO THE APPROVAL API
+ [x]- CONFIRM DIALOG 
+ [x] CONNECTION TO THE APPROVAL API
 
- - DECLINE AND ADD REMARK BY HOD - API 
- - ACCEPT APPROVAL BY HOD - API 
+ [x]- DECLINE AND ADD REMARK BY HOD - API 
+ [x]- ACCEPT APPROVAL BY HOD - API 
 
 
  <!-- new changes -->
  - routes changes from 
         request-approval -> approval-request
 
+
+COMPLETE THE APPROVAL MODULE - Co OFunder DC - Roshan Nahak [ The Android Master ] - Noogler
