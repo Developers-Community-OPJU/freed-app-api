@@ -126,6 +126,7 @@ module.exports = {
       });
     } catch (error) {
       console.error(error);
+      res.send(error)
     }
   },
 
