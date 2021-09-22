@@ -76,7 +76,7 @@ module.exports = {
       })
         .populate({
           path: "student",
-          select: "-password -__V -records",
+          select: "-password -__v -records",
         })
         .populate({
           path: "remark_by_warden.by",
