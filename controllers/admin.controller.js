@@ -23,9 +23,9 @@ module.exports = {
       })
         .populate({
           path: "student",
-          select: "branch from status",
+          select: "firstName lastName course branch semester",
         })
-        .select("student approval from");
+        .select("student approval from to");
 
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
       records = records.filter((record) => {
