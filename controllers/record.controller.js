@@ -8,7 +8,12 @@ module.exports = {
   // LIST ALL LEAVE FORMS
   GET_ALL: async (req, res) => {
     try {
-      const records = await RecordModel.find({});
+      const records = await RecordModel.find({})      
+      .populate({
+        path: "student",
+        select: "firstName lastName course branch semester",
+      })
+      .select('-__v -device_id -reason -remark_by_warden -approval')
 
       if (!records)
         return res
