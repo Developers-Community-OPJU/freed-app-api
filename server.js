@@ -72,7 +72,7 @@ io.on('connection', (socket) => {
 
 // establishing the server on the port 3000
 const port = process.env.PORT || 3000;
-const IP = process.env.IP;
+const IP = process.env.IP || '10.60.200.14';
 server.listen(port, IP, () => {
     console.log(`Server Started on the port :: ${port} - http://${IP}:${port} `);
 });
