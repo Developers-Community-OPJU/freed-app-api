@@ -8,8 +8,11 @@ router.get('/list', adminController.LIST_OF_ADMIN)
 // NEW ADMIN USER
 router.post('/add-user', adminController.ADD_NEW_USER)
 
-// DASHBOARD ADMIN DATA FETCH
+// DASHBOARD HOD DATA FETCH
 router.get('/fetch/:admin_id', adminController.GET_HOD_RECORDS)
+
+// DASHBOARD HOSTEL WARDEN DATA FETCH
+router.get('/fetch-warden/:admin_id', adminController.GET_ADMIN_RECORDS)
 
 // DECLINE AND ADDING REMARK BY HOD
 router.post('/add-user', adminController.ADD_NEW_USER)

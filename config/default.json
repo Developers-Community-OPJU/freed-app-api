@@ -3,5 +3,9 @@
     "_db" : {
         "local":"mongodb://localhost/leaveApp_db",
         "remote" : "mongodb+srv://dcoadmin:dcoadmin@cluster0.5nd46.mongodb.net/leaveAppDB"
+    },
+    "_process" : {
+        "IP" : "10.60.200.14",
+        "PORT" : 3030
     }
 }

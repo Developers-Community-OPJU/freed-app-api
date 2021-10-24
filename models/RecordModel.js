@@ -67,12 +67,12 @@ const RecordSchema = new mongoose.Schema({
         required: true
     },
     from: {
-        type: Date,
+        type: String,
         trim: true,
         required: true
     },
     to: {
-        type: Date,
+        type: String,
         trim: true,
         required: true
     },

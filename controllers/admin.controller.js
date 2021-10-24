@@ -43,6 +43,44 @@ module.exports = {
     }
   },
 
+  GET_ADMIN_RECORDS: async (req, res) => {
+    try {
+      const { admin_id } = req.params;
+
+      // GET ADMIN AND VERIFY IF IT EXISTS
+      const admin = await Admin.findOne({
+        _id: admin_id,
+      });      
+
+      if (!admin)
+        return res
+          .status(404)
+          .json({ msg: "Something went wrong", success: false });
+
+      //  get all the records for the warden with their respective resisence or hostels
+      let records = await RecordModel.find({})
+        .populate({
+          path: "student",
+          select: "firstName lastName course branch semester residence",
+        })
+        // .select("student approval from to");  
+
+      // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
+      records = records.filter((record) => {
+        return record.student.residence == admin.department;
+      });
+
+      res.status(200).json({
+        msg: `Records Found - ${records.length}`,
+        success: true,
+        records,
+      });
+    } catch (error) {
+      console.error(error);
+      res.send(error);
+    }
+  },
+
   LIST_OF_ADMIN: async (req, res) => {
     try {
       // List all the admin users

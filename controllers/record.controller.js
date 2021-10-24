@@ -3,17 +3,18 @@ const { RecordModel, VALIDATE_RECORD } = require("../models/RecordModel");
 const { Admin } = require("../models/AdminModel");
 const { Checklist } = require("../models/Checklist");
 const { exist } = require("joi");
+const { Student } = require("../models/StudentModel");
 
 module.exports = {
   // LIST ALL LEAVE FORMS
   GET_ALL: async (req, res) => {
     try {
-      const records = await RecordModel.find({})      
-      .populate({
-        path: "student",
-        select: "firstName lastName course branch semester",
-      })
-      .select('-__v -device_id -reason -remark_by_warden -approval')
+      const records = await RecordModel.find({})
+        .populate({
+          path: "student",
+          select: "firstName lastName course branch semester",
+        })
+        .select("-__v -device_id -reason -remark_by_warden -approval");
 
       if (!records)
         return res
@@ -56,6 +57,15 @@ module.exports = {
   // GET ALL RECORDS OF THE STUDENT
   GET_RECORDS: async (req, res) => {
     try {
+
+      const student = await Student.findOne({
+        _id : req.params.studentId
+      }).select('_id')
+      
+      console.log(student)
+      
+      if(!student) return res.status(401).json({msg: "Forbidden!"})
+
       const records = await RecordModel.find({
         student: req.params.studentId,
       });
@@ -92,17 +102,17 @@ module.exports = {
           path: "approval.sent_for_approval_by",
           select: "firstname lastname contact email",
           model: "admin",
-        }) 
+        })
         .populate({
           path: "approval.accepted_by",
           select: "firstname lastname contact email",
           model: "admin",
-        }) 
+        })
         .populate({
           path: "approval.declined_by",
           select: "firstname lastname contact email",
           model: "admin",
-        })       
+        });
 
       if (!record)
         return res
@@ -121,10 +131,11 @@ module.exports = {
   // APPLY FOR NEW LEAVE FORM
   REQUEST_NEW_RECORD: async (req, res) => {
     try {
-      // CHECKIN IF THE DEVICE ID IS PROVIDED 
+      // CHECKIN IF THE DEVICE ID IS PROVIDED
       const device = req.header("x-device-id");
-      if(!device) return res.status(403).json({ msg : "Forbidden!", success : false})
-      
+      if (!device)
+        return res.status(403).json({ msg: "Forbidden!", success: false });
+
       let record = ({ from, to, reason, destination, RID, student } = req.body);
       record.device_id = device;
       // VALIDATING THE RECORD
@@ -135,7 +146,7 @@ module.exports = {
         });
 
       // NEW RECORD
-      let leave = new RecordModel(record);     
+      let leave = new RecordModel(record);
 
       // SAVING THE RECORD
       const result = await leave.save();
@@ -146,7 +157,7 @@ module.exports = {
       });
     } catch (error) {
       console.error(error);
-      res.send(error)
+      res.send(error);
     }
   },
 
@@ -333,7 +344,7 @@ module.exports = {
           .json({ msg: "record not found", success: false });
 
       // updating the record
-      // update the approval status    
+      // update the approval status
 
       const result = await RecordModel.updateOne(
         { _id: recordId },
@@ -348,7 +359,6 @@ module.exports = {
         msg: "Approval Declined",
         success: true,
       });
-
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -371,18 +381,51 @@ module.exports = {
 
       // updating the record
       // update the approval status
-     
+
       await RecordModel.updateOne(
         { _id: recordId },
         {
           "approval.accepted": true,
-          "approval.accepted_by": admin._id       
+          "approval.accepted_by": admin._id,
         }
       );
 
       res.status(200).json({
         msg: "Record Approved",
-        success: true,    
+        success: true,
+      });
+    } catch (error) {
+      console.log(error);
+      res.json(error);
+    }
+  },
+  ACCEPT_MULTI_RECORDS: async (req, res) => {
+    try {
+      // get admin id and check if operation is valid
+      // record id's to be updated
+      const { adminId, recordIds } = req.body;
+
+      const admin = await Admin.findOne({ _id: adminId });
+
+      // checking for permissions
+      if (!admin && (admin.adminIs == "HOD" || admin.adminIs == "WARDEN"))
+        return res.status(403).json({ msg: "Forbidden!", success: false });
+
+      // perform update
+      const result = await RecordModel.updateMany(
+        { _id: { $in: recordIds } },
+        {
+          $set: {
+            "status": "ACCEPTED",
+            "approval.accepted": true,
+            "approval.accepted_by": admin._id,            
+          },
+        },        
+      );    
+
+      res.status(200).json({
+        success: true, 
+        result       
       });
 
     } catch (error) {
@@ -390,5 +433,4 @@ module.exports = {
       res.json(error);
     }
   },
-  
 };

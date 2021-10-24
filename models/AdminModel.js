@@ -18,7 +18,7 @@ const Admin_Schema = new mongoose.Schema({
     },
     department: {
         type: String,
-        enum: ["BOYS_HOSTEL", "GIRLS_HOSTEL","CSE","MECH","META","EEE","COMMON"],
+        enum: ["HR1", "HR2","HR3","CSE","MECH","META","EEE","COMMON"],
         required : true              
     } 
 });
@@ -51,7 +51,7 @@ function VALIDATE_LOGIN(user) {
 }
 
 Admin_Schema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ employeeCode: this.employeeCode, _id: this._id, adminIs: this.adminIs }, config.get("jwtPrivateKey"))
+    const token = jwt.sign({ employeeCode: this.employeeCode, _id: this._id, adminIs: this.adminIs}, config.get("jwtPrivateKey"))
     return token;
 }
 

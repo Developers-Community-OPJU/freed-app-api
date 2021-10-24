@@ -31,7 +31,13 @@ const Student_Schema = new mongoose.Schema({
     },
     room_no: {
         type: String,
-        trim: true
+        trim: true,
+       
+    },
+    residence: {
+        type: String,
+        trim: true,
+        enum : ["HR1","HR2","HR3"],
     },
     records: [{
         type: mongoose.Schema.Types.ObjectId,

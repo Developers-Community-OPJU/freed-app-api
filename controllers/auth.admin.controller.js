@@ -10,7 +10,6 @@ module.exports = {
         try {
             // PARSING FORM DATA
             let { employeeCode, password } = req.body;
-            console.log(employeeCode, password)
             // VALIDATING THE REQ
             const { error } = VALIDATE_LOGIN(req.body);
             if (error) return res
