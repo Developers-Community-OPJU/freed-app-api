@@ -420,7 +420,7 @@ module.exports = {
       }); 
 
       // perform update      
-      const update = await RecordModel.update(
+      const update = await RecordModel.updateMany(
         { _id: { $in: recordIds } },
         {
           $set: {
@@ -433,14 +433,15 @@ module.exports = {
       // chekc for existing record in the checkilsit 
       const found = await Checklist.find({
         record : { $in : recordIds }
-      })
-      
+      })     
 
       console.log("===========")
       console.log(found)
       console.log("===========")
 
-      if(update.n === result.length  && !found) {
+      console.log(update.n === result.length && found.length === 0)
+
+      if(update.n === result.length  && found.length === 0) {
         const checklist = await Checklist.insertMany(result)
         res.status(200).json({  
           success: true, 
@@ -449,7 +450,6 @@ module.exports = {
           checklist   
         });
       }
-
       else return res.status(400).json({ msg : "Update Failed!", success : false })      
 
     } catch (error) {
