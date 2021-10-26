@@ -83,7 +83,9 @@ module.exports = {
 
     GET_CHECK_LIST: async (req, res) => {
         try {
-
+            
+            // this route can only be accessed by the admins   
+            // headers [ x-auth-admin ] - > adminId          
             const record = await Checklist.find({});
 
             if (!record) return res.status(404).json({ msg: "No Records Found", success: false });

@@ -2,7 +2,7 @@ const { json } = require("body-parser");
 const { RecordModel, VALIDATE_RECORD } = require("../models/RecordModel");
 const { Admin } = require("../models/AdminModel");
 const { Checklist } = require("../models/Checklist");
-const { exist } = require("joi");
+const { exist, array } = require("joi");
 const { Student } = require("../models/StudentModel");
 
 module.exports = {
@@ -60,9 +60,7 @@ module.exports = {
 
       const student = await Student.findOne({
         _id : req.params.studentId
-      }).select('_id')
-      
-      console.log(student)
+      }).select('_id')  
       
       if(!student) return res.status(401).json({msg: "Forbidden!"})
 
@@ -403,30 +401,56 @@ module.exports = {
     try {
       // get admin id and check if operation is valid
       // record id's to be updated
-      const { adminId, recordIds } = req.body;
+      const adminId = req.headers['x-auth-check-admin'];      
+      const admin = await Admin.findById(adminId);
+      if(!admin ) return res.status(403).json({ msg : "Accesss Denied", success : false})     
+      
+      // // check
+      const { recordIds } = req.body;
+      
+      let result = await RecordModel.find({
+        _id : { $in : recordIds }
+      });
 
-      const admin = await Admin.findOne({ _id: adminId });
+      result = result.map(element => {
+        return {
+          record : element._id,
+          student : element.student
+        }
+      }); 
 
-      // checking for permissions
-      if (!admin && (admin.adminIs == "HOD" || admin.adminIs == "WARDEN"))
-        return res.status(403).json({ msg: "Forbidden!", success: false });
-
-      // perform update
-      const result = await RecordModel.updateMany(
+      // perform update      
+      const update = await RecordModel.update(
         { _id: { $in: recordIds } },
         {
           $set: {
-            "status": "ACCEPTED",
-            "approval.accepted": true,
-            "approval.accepted_by": admin._id,            
-          },
-        },        
+            "status": "ACCEPTED",                    
+          },         
+        },      
+        { multi: true }  
       );    
 
-      res.status(200).json({
-        success: true, 
-        result       
-      });
+      // chekc for existing record in the checkilsit 
+      const found = await Checklist.find({
+        record : { $in : recordIds }
+      })
+      
+
+      console.log("===========")
+      console.log(found)
+      console.log("===========")
+
+      if(update.n === result.length  && !found) {
+        const checklist = await Checklist.insertMany(result)
+        res.status(200).json({  
+          success: true, 
+          update,
+          result,
+          checklist   
+        });
+      }
+
+      else return res.status(400).json({ msg : "Update Failed!", success : false })      
 
     } catch (error) {
       console.log(error);

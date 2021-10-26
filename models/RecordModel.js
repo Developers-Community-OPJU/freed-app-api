@@ -37,7 +37,7 @@ const ApprovalSchema = new mongoose.Schema({
         remark : {
             type : String,
         }
-  })
+  });
 
   // Record Schema
 const RecordSchema = new mongoose.Schema({
