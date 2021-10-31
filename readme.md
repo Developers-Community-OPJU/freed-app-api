@@ -124,3 +124,4 @@ https://app.getpostman.com/join-team?invite_code=2c4666921c3c07107c5c1f4c76b2ced
 
 
 [] add auth check middleware [ student , admin ]
+[] manual leave entry by admin
