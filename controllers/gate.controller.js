@@ -29,9 +29,7 @@ module.exports = {
                     student: inChecklist.student,
                     record: inChecklist.record
                 });
-
-                console.log(inChecklist)
-
+                
                 let removed = await Checkout.findOneAndRemove({
                     record: inChecklist.record
                 })

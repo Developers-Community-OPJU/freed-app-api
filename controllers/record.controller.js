@@ -433,13 +433,7 @@ module.exports = {
       // chekc for existing record in the checkilsit 
       const found = await Checklist.find({
         record : { $in : recordIds }
-      })     
-
-      console.log("===========")
-      console.log(found)
-      console.log("===========")
-
-      console.log(update.n === result.length && found.length === 0)
+      })   
 
       if(update.n === result.length  && found.length === 0) {
         const checklist = await Checklist.insertMany(result)

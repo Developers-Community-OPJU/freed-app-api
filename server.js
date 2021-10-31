@@ -6,13 +6,11 @@ const app = express();
 const config = require("config");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const ejs = require('ejs')
 // Config Cluster
 const cluster = require("cluster");
 // Check the number of available CPU.
-const numCPUs = require('os').cpus().length;
-
-// const public_path = path.join(__dirname, "../public")
-app.use(express.static("public"));
+const numCPUs = require("os").cpus().length;
 
 // CONFIGURING CONFIG JWTPRIVATEKEY
 if (!config.get("jwtPrivateKey")) {
@@ -30,6 +28,16 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+app.use(express.static("public"));
+// set the view engine to ejs
+app.set('views', './public');
+app.set('view engine', 'ejs');
+
+app.get("/downloads/", (req, res) => {
+  res.render('admin')
+});
+
 const students = require("./routes/student");
 const records = require("./routes/records");
 const auth = require("./routes/auth.student");
@@ -45,6 +53,10 @@ app.use("/api/auth", auth);
 app.use("/api/auth/admin", authAdmin);
 app.use("/api/admin", admin);
 
+
+app.get('*', (req,res)=>{
+  res.status(400).send("Not Found")
+})
 /////////////////////////////////////////////
 //    SOCKET cONNECTION FOR NOTIFICATIONS
 /////////////////////////////////////////////
@@ -52,21 +64,21 @@ app.use("/api/admin", admin);
 io.on("connection", (socket) => {
   // connecting student
   socket.on("join", (id) => {
-    socket.join(id);
+    socket.join(id);    
   });
 
   // waiting for msg from admin
-  socket.on("msg from admin", (student) => {
+  socket.on("msg from admin", (student) => {    
     // get student id and msg from the gate-app
     // send the noitification to the student with provided id
+
     // sending msg to student
     socket.broadcast.to(student.id).emit("msg to student", {
       msg: student.msg,
       success: true,
-    });
+    });      
   });
 });
-
 
 // config cluster for parallel processing
 if (cluster.isMaster) {
@@ -86,12 +98,12 @@ if (cluster.isMaster) {
 // For Worker
 else {
   // Workers can share any TCP connection
-// establishing the server on the port 3000
+  // establishing the server on the port 3000
   const port = process.env.PORT || config.get("_process").PORT;
   const IP = process.env.IP || config.get("_process").IP;
   server.listen(port, IP, () => {
-    console.log(`Client Server Started Processs ${process.pid} :: http://${IP}:${port} `);
-  });  
+    console.log(
+      `Client Server Started Processs ${process.pid} :: http://${IP}:${port} `
+    );
+  });
 }
-
-
