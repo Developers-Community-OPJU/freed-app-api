@@ -44,6 +44,7 @@ const auth = require("./routes/auth.student");
 const gateway = require("./routes/gate");
 const authAdmin = require("./routes/auth.admin");
 const admin = require("./routes/admin");
+const verification = require("./routes/verification");
 
 // ROUTES
 app.use("/api/student", students);
@@ -52,10 +53,11 @@ app.use("/api/gateway", gateway);
 app.use("/api/auth", auth);
 app.use("/api/auth/admin", authAdmin);
 app.use("/api/admin", admin);
+app.use("/api/verification", verification);
 
 
 app.get('*', (req,res)=>{
-  res.status(400).send("Not Found")
+  res.status(400).send("Wrong turn!")
 })
 /////////////////////////////////////////////
 //    SOCKET cONNECTION FOR NOTIFICATIONS

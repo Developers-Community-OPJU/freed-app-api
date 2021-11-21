@@ -42,7 +42,11 @@ const Student_Schema = new mongoose.Schema({
     records: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'records'
-    }]
+    }],
+    verified : {
+        type : Boolean,
+        default : false
+    }
 }, { timestamps: true });
 
 // VALIDATING STUDENT SCHEMA - ON REGISTRATION
