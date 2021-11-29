@@ -70,6 +70,8 @@ module.exports = {
         return record.student.residence == admin.department;
       });
 
+      if (records.length == 0) return res.status(400).json({ msg : "No Records found", success : false })
+ 
       res.status(200).json({
         msg: `Records Found - ${records.length}`,
         success: true,

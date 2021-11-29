@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const recordController = require("../controllers/record.controller")
 
-
+    
 // ADMIN ROUTES
 // LIST ALL RECORDS
 router.get('/', recordController.GET_ALL);

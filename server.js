@@ -21,13 +21,13 @@ if (!config.get("jwtPrivateKey")) {
 // CONFIGURING MONODB WITH MONGOOSE
 require("./modules/mongoose.config");
 
+
 app.use(morgan("tiny"));
 app.use(cors());
 
 // CONFIGURING BODY PARSER
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
 
 app.use(express.static("public"));
 // set the view engine to ejs
@@ -59,6 +59,7 @@ app.use("/api/verification", verification);
 app.get('*', (req,res)=>{
   res.status(400).send("Wrong turn!")
 })
+
 /////////////////////////////////////////////
 //    SOCKET cONNECTION FOR NOTIFICATIONS
 /////////////////////////////////////////////
@@ -70,7 +71,8 @@ io.on("connection", (socket) => {
   });
 
   // waiting for msg from admin
-  socket.on("msg from admin", (student) => {    
+  socket.on("msg from admin", (student) => {  
+
     // get student id and msg from the gate-app
     // send the noitification to the student with provided id
 

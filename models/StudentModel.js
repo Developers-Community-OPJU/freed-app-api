@@ -57,7 +57,7 @@ function VALIDATE_REGISTER(user) {
     });
 
     return schema.validate(user);
-}
+}``
 
 // VALIDATING STUDENT SCHEMA - ON LOGIN
 function VALIDATE_LOGIN(user) {

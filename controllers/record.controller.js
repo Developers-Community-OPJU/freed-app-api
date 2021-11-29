@@ -134,18 +134,18 @@ module.exports = {
       if (!device)
         return res.status(403).json({ msg: "Forbidden!", success: false });
 
-      let record = ({ from, to, reason, destination, RID, student } = req.body);
+      let record = ({ from, to, reason, destination, student } = req.body);
       record.device_id = device;
+      record.RID = (await generateRecordId(student)).toString();    
       // VALIDATING THE RECORD
       const { error } = VALIDATE_RECORD(record);
       if (error)
         return res.status(400).json({
-          msg: error.details[0].message,
+          msg: error.details[0].message,  
         });
 
       // NEW RECORD
-      let leave = new RecordModel(record);
-
+      let leave = new RecordModel(record); 
       // SAVING THE RECORD
       const result = await leave.save();
       res.status(200).json({
@@ -452,3 +452,9 @@ module.exports = {
     }
   },
 };
+
+// Helper Functions
+const generateRecordId = async (student_id)=>{    
+    let records = await RecordModel.find();
+    return "LRI"+ (records.length + 1) + student_id.slice(student_id.length - 5, student_id.length)
+}

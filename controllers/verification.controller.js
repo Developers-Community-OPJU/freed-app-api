@@ -27,8 +27,7 @@ module.exports = {
   },
   
   VERIFY_STUDENT: async (req, res) => {
-    try {
-      console.log({ verification_id: req.params.id });
+    try {     
       const verified = await Student.updateOne(
         {
           _id: req.params.id,
