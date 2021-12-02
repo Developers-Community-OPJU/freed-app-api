@@ -14,6 +14,7 @@ const Student_Schema = new mongoose.Schema({
         enum: ['M', 'F']
     },
     email: { type: String, trim: true },
+    profile: { type: String, trim: true },
     branch: { type: String },
     course: { type: String },
     semester: { type: Number },
