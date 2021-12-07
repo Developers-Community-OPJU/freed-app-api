@@ -39,11 +39,7 @@ const Student_Schema = new mongoose.Schema({
         type: String,
         trim: true,
         enum : ["HR1","HR2","HR3"],
-    },
-    records: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'records'
-    }],
+    },    
     verified : {
         type : Boolean,
         default : false
