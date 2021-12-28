@@ -52,6 +52,7 @@ module.exports = {
         _id: admin_id,
       });      
 
+      // display "something went wrong" when admin doesnt exists - 404
       if (!admin)
         return res
           .status(404)
@@ -61,14 +62,16 @@ module.exports = {
       let records = await RecordModel.find({})
         .populate({
           path: "student",
-          select: "firstName lastName course branch semester residence",
+          select: "firstName lastName course branch semester residence profile verified",
         })
         // .select("student approval from to");  
 
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
       records = records.filter((record) => {
-        return record.student.residence == admin.department;
+        return record.student.verified && (record.student.residence == admin.department);
       });
+
+      console.log(records)
 
       if (records.length == 0) return res.status(400).json({ msg : "No Records found", success : false })
  

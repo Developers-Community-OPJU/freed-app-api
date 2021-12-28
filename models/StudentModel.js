@@ -22,7 +22,8 @@ const Student_Schema = new mongoose.Schema({
         personal: {            
             type: Number,
             min: 10,
-            max: 10,
+            max: 10,            
+            unique : true
         },
         guardian: {
             type: Number,
@@ -32,8 +33,7 @@ const Student_Schema = new mongoose.Schema({
     },
     room_no: {
         type: String,
-        trim: true,
-       
+        trim: true,       
     },
     residence: {
         type: String,

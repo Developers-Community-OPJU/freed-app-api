@@ -16,7 +16,7 @@ module.exports = {
    GET_STUDENT: async (req, res) => {
     try {
       // FINDING STUDENT WITH ID
-      const student = await Student.find({_id : req.params.id});
+      const student = await Student.find({_id : req.params.id}).select('-password');      
       res.status(200).json({
         student,
         success: true,

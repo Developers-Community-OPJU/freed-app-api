@@ -75,7 +75,6 @@ io.on("connection", (socket) => {
 
     // get student id and msg from the gate-app
     // send the noitification to the student with provided id
-
     // sending msg to student
     socket.broadcast.to(student.id).emit("msg to student", {
       msg: student.msg,
@@ -105,7 +104,7 @@ else {
   // establishing the server on the port 3000
   const port = process.env.PORT || config.get("_process").PORT;
   const IP = process.env.IP || config.get("_process").IP;
-  server.listen(port, IP, () => {
+  server.listen(port, IP, () => {    
     console.log(
       `Client Server Started Processs ${process.pid} :: http://${IP}:${port} `
     );
