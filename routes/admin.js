@@ -17,6 +17,4 @@ router.get('/fetch-warden/:admin_id', adminController.GET_ADMIN_RECORDS)
 // DECLINE AND ADDING REMARK BY HOD
 router.post('/add-user', adminController.ADD_NEW_USER)
 
-
-
 module.exports = router;

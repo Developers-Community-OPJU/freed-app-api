@@ -136,7 +136,7 @@ module.exports = {
 
       let record = ({ from, to, reason, destination, student } = req.body);
       record.device_id = device;
-      record.RID = (await generateRecordId(student)).toString();    
+      record.RID = (await newRecordId(student)).toString();
       // VALIDATING THE RECORD
       const { error } = VALIDATE_RECORD(record);
       if (error)
@@ -454,7 +454,9 @@ module.exports = {
 };
 
 // Helper Functions
-const generateRecordId = async (student_id)=>{    
-    let records = await RecordModel.find();
-    return "LRI"+ (records.length + 1) + student_id.slice(student_id.length - 5, student_id.length)
+const newRecordId = async (student_id) =>{
+  const records = await RecordModel.find({});  
+  let student = await Student.findOne({ _id : student_id}).select('RID') 
+  const hash = (student.RID).substring(0,4)
+  return "L" + hash + (records.length + 1)
 }

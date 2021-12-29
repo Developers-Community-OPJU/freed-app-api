@@ -70,9 +70,7 @@ module.exports = {
       records = records.filter((record) => {
         return record.student.verified && (record.student.residence == admin.department);
       });
-
-      console.log(records)
-
+      
       if (records.length == 0) return res.status(400).json({ msg : "No Records found", success : false })
  
       res.status(200).json({

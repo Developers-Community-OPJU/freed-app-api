@@ -8,5 +8,9 @@
         "IP" : "10.60.200.14",
         "PUBLIC_IP" : "115.241.249.180",
         "PORT" : 3030
+    },
+    "_twilio" :{
+        "sid" : "AC38ec42d3f29d048b71cbde947041d6ee",
+        "auth_token" : "d0834b640310479dcf67d6b5d3ddb513"
     }
 }

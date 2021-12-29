@@ -35,7 +35,8 @@ module.exports = {
         {
           verified: true,
         }
-      );
+      );     
+     
       res.status(200).json({ verified, success: true });
     } catch (error) {
       console.error(error);
