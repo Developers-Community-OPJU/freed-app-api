@@ -208,7 +208,6 @@ module.exports = {
         });
 
         // console.log("user found in the checklist : ", found)
-
         // if not in the list add to the list
         if (!found) {
           // console.log("Adding user to the checklist")
@@ -458,5 +457,6 @@ const newRecordId = async (student_id) =>{
   const records = await RecordModel.find({});  
   let student = await Student.findOne({ _id : student_id}).select('RID') 
   const hash = (student.RID).substring(0,4)
+  console.log("new length : ", records.length +1)
   return "L" + hash + (records.length + 1)
 }

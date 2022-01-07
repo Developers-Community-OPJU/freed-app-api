@@ -17,7 +17,6 @@ module.exports = {
                 .json({ msg: "Validation Failed", error: error.details[0].message });
 
             // FINDING STUDENT WITH RID
-
             const admin = await Admin.findOne({ employeeCode })
             if (!admin) {
                 return res
@@ -27,7 +26,6 @@ module.exports = {
                         success: false,
                     });
             }
-
             // DECRYPTING PASSWORD
             const match = await bcrypt.compare(password, admin.password);
             if (!match) return res

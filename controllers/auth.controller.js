@@ -9,7 +9,7 @@ module.exports = {
     LOGIN_STUDENT: async (req, res) => {
         try {
             // PARSING FORM DATA
-            let { RID, password } = req.body;
+            let { RID, password } = req.body; 
             // VALIDATING THE REQ
             const { error } = VALIDATE_LOGIN(req.body);
             if (error) return res
@@ -43,7 +43,6 @@ module.exports = {
                     success: true,
                     token
                 });
-
 
         } catch (error) {
             console.error(error)

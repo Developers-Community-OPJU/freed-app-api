@@ -19,7 +19,7 @@ module.exports = {
 
       //  get all the records
       let records = await RecordModel.find({
-        'approval.sent_for_approval' : true
+        "approval.sent_for_approval": true,
       })
         .populate({
           path: "student",
@@ -50,7 +50,7 @@ module.exports = {
       // GET ADMIN AND VERIFY IF IT EXISTS
       const admin = await Admin.findOne({
         _id: admin_id,
-      });      
+      });
 
       // display "something went wrong" when admin doesnt exists - 404
       if (!admin)
@@ -59,20 +59,26 @@ module.exports = {
           .json({ msg: "Something went wrong", success: false });
 
       //  get all the records for the warden with their respective resisence or hostels
-      let records = await RecordModel.find({})
-        .populate({
-          path: "student",
-          select: "firstName lastName course branch semester residence profile verified",
-        })
-        // .select("student approval from to");  
+      let records = await RecordModel.find({}).populate({
+        path: "student",
+        select:
+          "firstName lastName course branch semester residence profile verified",
+      });
+      // .select("student approval from to");
 
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
       records = records.filter((record) => {
-        return record.student.verified && (record.student.residence == admin.department);
+        return (
+          record.student.verified &&
+          record.student.residence == admin.department
+        );
       });
-      
-      if (records.length == 0) return res.status(400).json({ msg : "No Records found", success : false })
- 
+
+      if (records.length == 0)
+        return res
+          .status(400)
+          .json({ msg: "No Records found", success: false });
+
       res.status(200).json({
         msg: `Records Found - ${records.length}`,
         success: true,
@@ -160,5 +166,30 @@ module.exports = {
       console.error(error);
       res.send(error);
     }
-  },  
+  },
+
+  // REMOVE ADMIN USER
+  REMOVE_ADMIN_USER: async (req, res) => {
+    try {
+      // CHECK IF THE USER EXITS
+      // parsing eid from query object where 
+      console.log(req.query.id)
+      let user = await Admin.findOneAndDelete({
+        _id: req.query.id,
+      });
+      if (!user)
+        return res.json({ msg: "User does not exists!", success: false }).status(400);
+
+      res
+        .json({
+          msg: "User removed successfully!",
+          success: true,
+        })
+        .status(200);
+
+    } catch (error) {
+      console.error(error);
+      res.send(error);
+    }
+  },
 };
