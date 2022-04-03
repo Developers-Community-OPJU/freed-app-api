@@ -5,7 +5,7 @@
         "remote" : "mongodb+srv://dcoadmin:dcoadmin@cluster0.5nd46.mongodb.net/leaveAppDB"
     },
     "_process" : {
-        "IP" : "10.60.200.14",
+        "IP" : "localhost",
         "PUBLIC_IP" : "115.241.249.180",
         "PORT" : 3030
     },
