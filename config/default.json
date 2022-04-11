@@ -1,16 +1,20 @@
 {
-    "jwtPrivateKey" : "opjunleaveappprivatekey",  
-    "_db" : {
-        "local":"mongodb://localhost/leaveApp_db",
-        "remote" : "mongodb+srv://dcoadmin:dcoadmin@cluster0.5nd46.mongodb.net/leaveAppDB"
-    },
-    "_process" : {
-        "IP" : "10.60.200.14",
-        "PUBLIC_IP" : "115.241.249.180",
-        "PORT" : 3030
-    },
-    "_twilio" :{
-        "sid" : "AC38ec42d3f29d048b71cbde947041d6ee",
-        "auth_token" : "d0834b640310479dcf67d6b5d3ddb513"
-    }
+  "jwtPrivateKey": "opjunleaveappprivatekey",
+  "_db": {
+    "local": "mongodb://localhost/leaveApp_db",
+    "remote": "mongodb+srv://dcoadmin:dcoadmin@cluster0.5nd46.mongodb.net/leaveAppDB"
+  },
+  "_process": {
+    "IP": "10.60.200.14",
+    "PUBLIC_IP": "115.241.249.180",
+    "PORT": 3030
+  },
+  "_twilio": {
+    "sid": "AC38ec42d3f29d048b71cbde947041d6ee",
+    "auth_token": "d0834b640310479dcf67d6b5d3ddb513"
+  },
+  "_nodemailer": {
+    "EMAIL": "dco.opju@gmail.com",
+    "PASS": "dcoCommunity2021"
+  }
 }

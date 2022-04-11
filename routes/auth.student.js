@@ -15,4 +15,7 @@ router.post('/reset-password', authController.RESET_PASSWORD)
 // DECRYPT TOKEN
 router.post('/spread_token', authController.SPREAD_TOKEN)
 
+//  GENEERATE NEW PASSOWRD 
+router.post('/generate_password', authController.GENERATE_PASSWORD)
+
 module.exports = router;
