@@ -204,18 +204,12 @@ module.exports = {
         });
       }
 
-      if (student && !student.verified) {
+      if (!student.email) {
         return res.status(405).json({
           msg: "You are not verified user",
           success: false,
         });
       }
-
-      /**
-       * generate otp
-       * update the password
-       * send the mail
-       */
 
       const OTP = await generateOTP();
       if (!OTP) {
@@ -229,28 +223,18 @@ module.exports = {
       const salt = await bcrypt.genSalt(15);
       const newPassword = await bcrypt.hash(OTP, salt);
 
-      let result = await Student.findOneAndUpdate(
+      const result = await Student.findOneAndUpdate(
         { RID },
         {
           password: newPassword,
         }
       );
 
-      if (!student.email) {
-        return res.status(405).json({
-          msg: "You are not verified user",
-          success: false,
-        });
-      }
-
       // sending mail to RID
       await mailer(student.email, OTP);
 
       res.status(200).json({
-        msg: "Password sent successfully! Please check your registered email",
-        data: {
-          email: student.email,
-        },
+        msg: `Recovery Password Sent to ${student.email}`,
         success: true,
       });
     } catch (error) {
