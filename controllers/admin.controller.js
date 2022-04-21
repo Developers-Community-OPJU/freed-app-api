@@ -62,7 +62,7 @@ module.exports = {
       let records = await RecordModel.find({}).populate({
         path: "student",
         select:
-          "firstName lastName course branch semester residence profile verified",
+          "firstName lastName course branch semester residence verified",
       });
       // .select("student approval from to");
 
