@@ -8,12 +8,19 @@ const { Student } = require("../models/StudentModel");
 module.exports = {
   // LIST ALL LEAVE FORMS
   GET_ALL: async (req, res) => {
+    const { page } = req.query;
+
+    const { limit, offset } = getPagination(5);
+
+    console.log(`limit : ${limit}`);
+    console.log(`offset : ${offset}`);
+
     try {
       const records = await RecordModel.find({})
         .populate({
           path: "student",
           select: "firstName lastName course branch semester",
-        })
+        })    
         .select("-__v -device_id -reason -remark_by_warden -approval");
 
       if (!records)
@@ -57,12 +64,11 @@ module.exports = {
   // GET ALL RECORDS OF THE STUDENT
   GET_RECORDS: async (req, res) => {
     try {
-
       const student = await Student.findOne({
-        _id : req.params.studentId
-      }).select('_id')  
-      
-      if(!student) return res.status(401).json({msg: "Forbidden!"})
+        _id: req.params.studentId,
+      }).select("_id");
+
+      if (!student) return res.status(401).json({ msg: "Forbidden!" });
 
       const records = await RecordModel.find({
         student: req.params.studentId,
@@ -141,11 +147,11 @@ module.exports = {
       const { error } = VALIDATE_RECORD(record);
       if (error)
         return res.status(400).json({
-          msg: error.details[0].message,  
+          msg: error.details[0].message,
         });
 
       // NEW RECORD
-      let leave = new RecordModel(record); 
+      let leave = new RecordModel(record);
       // SAVING THE RECORD
       const result = await leave.save();
       res.status(200).json({
@@ -400,51 +406,51 @@ module.exports = {
     try {
       // get admin id and check if operation is valid
       // record id's to be updated
-      const adminId = req.headers['x-auth-check-admin'];      
+      const adminId = req.headers["x-auth-check-admin"];
       const admin = await Admin.findById(adminId);
-      if(!admin ) return res.status(403).json({ msg : "Accesss Denied", success : false})     
-      
+      if (!admin)
+        return res.status(403).json({ msg: "Accesss Denied", success: false });
+
       // // check
       const { recordIds } = req.body;
-      
+
       let result = await RecordModel.find({
-        _id : { $in : recordIds }
+        _id: { $in: recordIds },
       });
 
-      result = result.map(element => {
+      result = result.map((element) => {
         return {
-          record : element._id,
-          student : element.student
-        }
-      }); 
+          record: element._id,
+          student: element.student,
+        };
+      });
 
-      // perform update      
+      // perform update
       const update = await RecordModel.updateMany(
         { _id: { $in: recordIds } },
         {
           $set: {
-            "status": "ACCEPTED",                    
-          },         
-        },      
-        { multi: true }  
-      );    
+            status: "ACCEPTED",
+          },
+        },
+        { multi: true }
+      );
 
-      // chekc for existing record in the checkilsit 
+      // chekc for existing record in the checkilsit
       const found = await Checklist.find({
-        record : { $in : recordIds }
-      })   
+        record: { $in: recordIds },
+      });
 
-      if(update.n === result.length  && found.length === 0) {
-        const checklist = await Checklist.insertMany(result)
-        res.status(200).json({  
-          success: true, 
+      if (update.n === result.length && found.length === 0) {
+        const checklist = await Checklist.insertMany(result);
+        res.status(200).json({
+          success: true,
           update,
           result,
-          checklist   
+          checklist,
         });
-      }
-      else return res.status(400).json({ msg : "Update Failed!", success : false })      
-
+      } else
+        return res.status(400).json({ msg: "Update Failed!", success: false });
     } catch (error) {
       console.log(error);
       res.json(error);
@@ -453,10 +459,16 @@ module.exports = {
 };
 
 // Helper Functions
-const newRecordId = async (student_id) =>{
-  const records = await RecordModel.find({});  
-  let student = await Student.findOne({ _id : student_id}).select('RID') 
-  const hash = (student.RID).substring(0,4)
-  console.log("new length : ", records.length +1)
-  return "L" + hash + (records.length + 1)
-}
+const newRecordId = async (student_id) => {
+  const records = await RecordModel.find({});
+  let student = await Student.findOne({ _id: student_id }).select("RID");
+  const hash = student.RID.substring(0, 4);
+  console.log("new length : ", records.length + 1);
+  return "L" + hash + (records.length + 1);
+};
+
+const getPagination = (page, size = 12) => {
+  const limit = size ? +size : 3;
+  const offset = page ? page * limit : 0;
+  return { limit, offset };
+};
