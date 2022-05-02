@@ -5,7 +5,7 @@ const config = require('config');
 
 // STUDENT MODEL
 const Student_Schema = new mongoose.Schema({
-    RID: { type: String, required: true, trim: true, minlength: 6, maxlength: 255 },
+    RID: { type: String, required: true, trim: true, minlength: 6, maxlength: 255, unique: true },
     password: { type: String, bcrypt: true, minlength: 8, maxlength: 1024, required: true },
     firstName: { type: String, trim: true },
     lastName: { type: String, trim: true },
@@ -13,7 +13,7 @@ const Student_Schema = new mongoose.Schema({
         type: String,
         enum: ['M', 'F']
     },
-    email: { type: String, trim: true },
+    email: { type: String, trim: true, unique: true},
     profile: { type: String, trim: true },
     branch: { type: String },
     course: { type: String },
@@ -23,6 +23,7 @@ const Student_Schema = new mongoose.Schema({
             type: Number,
             min: 10,
             max: 10, 
+            unique: true,
         },
         guardian: {
             type: Number,
