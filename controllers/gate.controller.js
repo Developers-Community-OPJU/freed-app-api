@@ -1,6 +1,7 @@
 const { Checklist } = require('../models/Checklist')
 const { Checkout } = require('../models/Checkout')
 const { Checkin } = require('../models/Checkin')
+const { Student } = require('../models/StudentModel')
 const { RecordModel } = require('../models/RecordModel');
 
 module.exports = {
@@ -29,7 +30,10 @@ module.exports = {
                     student: inChecklist.student,
                     record: inChecklist.record
                 });
-                
+
+                //find student profile picture
+                let studentProfile = await Student.findOne({ _id: inCheckout.student })
+
                 let removed = await Checkout.findOneAndRemove({
                     record: inChecklist.record
                 })
@@ -44,6 +48,7 @@ module.exports = {
                     await checkin.save()
                     return res.json({
                         checkedin: true,
+                        profile: studentProfile.profile,
                         msg: "Welcome, Great to have you back!",
                         success: true,
                         data: {
@@ -61,11 +66,15 @@ module.exports = {
                     record: inChecklist.record
                 })
 
+                //find student profile picture
+                let student_profile = await Student.findOne({ _id: inChecklist.student })
+
                 await checkout.save();
                 return res
                     .status(200)
                     .json({
                         checkedout: true,
+                        profile: student_profile.profile,
                         msg: "Hurray! Have a Great Journey :)",
                         success: true,
                         data: {
@@ -81,7 +90,7 @@ module.exports = {
 
     GET_CHECK_LIST: async (req, res) => {
         try {
-            
+
             // this route can only be accessed by the admins   
             // headers [ x-auth-admin ] - > adminId          
             const record = await Checklist.find({});
