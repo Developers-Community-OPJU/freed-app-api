@@ -45,6 +45,7 @@ const gateway = require("./routes/gate");
 const authAdmin = require("./routes/auth.admin");
 const admin = require("./routes/admin");
 const verification = require("./routes/verification");
+const dashboard = require("./routes/warden")
 
 // ROUTES
 app.use("/api/student", students);
@@ -54,6 +55,7 @@ app.use("/api/auth", auth);
 app.use("/api/auth/admin", authAdmin);
 app.use("/api/admin", admin);
 app.use("/api/verification", verification);
+app.use("/api/warden", dashboard);
 
 
 app.get('*', (req,res)=>{
