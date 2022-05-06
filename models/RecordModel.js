@@ -59,7 +59,7 @@ const RecordSchema = new mongoose.Schema(
       trim: true,
       minlength: 6,
       maxlength: 255,
-    },   
+    },
     destination: {
       type: String,
       trim: true,

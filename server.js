@@ -6,7 +6,7 @@ const app = express();
 const config = require("config");
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-const ejs = require('ejs')
+const ejs = require("ejs");
 // Config Cluster
 const cluster = require("cluster");
 // Check the number of available CPU.
@@ -21,7 +21,6 @@ if (!config.get("jwtPrivateKey")) {
 // CONFIGURING MONODB WITH MONGOOSE
 require("./modules/mongoose.config");
 
-
 app.use(morgan("tiny"));
 app.use(cors());
 
@@ -31,11 +30,11 @@ app.use(bodyParser.json());
 
 app.use(express.static("public"));
 // set the view engine to ejs
-app.set('views', './public');
-app.set('view engine', 'ejs');
+app.set("views", "./public");
+app.set("view engine", "ejs");
 
 app.get("/downloads/", (req, res) => {
-  res.render('admin')
+  res.render("admin");
 });
 
 const students = require("./routes/student");
@@ -45,7 +44,7 @@ const gateway = require("./routes/gate");
 const authAdmin = require("./routes/auth.admin");
 const admin = require("./routes/admin");
 const verification = require("./routes/verification");
-const dashboard = require("./routes/warden")
+const dashboard = require("./routes/warden");
 
 // ROUTES
 app.use("/api/student", students);
@@ -57,10 +56,9 @@ app.use("/api/admin", admin);
 app.use("/api/verification", verification);
 app.use("/api/warden", dashboard);
 
-
-app.get('*', (req,res)=>{
-  res.status(400).send("Wrong turn!")
-})
+app.get("*", (req, res) => {
+  res.status(400).send("Wrong turn!");
+});
 
 /////////////////////////////////////////////
 //    SOCKET cONNECTION FOR NOTIFICATIONS
@@ -69,19 +67,18 @@ app.get('*', (req,res)=>{
 io.on("connection", (socket) => {
   // connecting student
   socket.on("join", (id) => {
-    socket.join(id);    
+    socket.join(id);
   });
 
   // waiting for msg from admin
-  socket.on("msg from admin", (student) => {  
-
+  socket.on("msg from admin", (student) => {
     // get student id and msg from the gate-app
     // send the noitification to the student with provided id
     // sending msg to student
     socket.broadcast.to(student.id).emit("msg to student", {
       msg: student.msg,
       success: true,
-    });      
+    });
   });
 });
 
@@ -106,7 +103,7 @@ else {
   // establishing the server on the port 3000
   const port = process.env.PORT || config.get("_process").PORT;
   const IP = process.env.IP || config.get("_process").IP;
-  server.listen(port, IP, () => {    
+  server.listen(port, IP, () => {
     console.log(
       `Client Server Started Processs ${process.pid} :: http://${IP}:${port} `
     );

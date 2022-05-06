@@ -51,7 +51,6 @@ module.exports = {
 
   REGISTER_ADMIN: async (req, res) => {
     try {
-        
       // VALIDATING THE REQ
       const { error } = VALIDATE_REGISTER(req.body);
       if (error)

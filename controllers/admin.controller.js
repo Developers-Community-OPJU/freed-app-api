@@ -61,8 +61,7 @@ module.exports = {
       //  get all the records for the warden with their respective resisence or hostels
       let records = await RecordModel.find({}).populate({
         path: "student",
-        select:
-          "firstName lastName course branch semester residence verified",
+        select: "firstName lastName course branch semester residence verified",
       });
       // .select("student approval from to");
 
@@ -172,13 +171,15 @@ module.exports = {
   REMOVE_ADMIN_USER: async (req, res) => {
     try {
       // CHECK IF THE USER EXITS
-      // parsing eid from query object where 
-      console.log(req.query.id)
+      // parsing eid from query object where
+      console.log(req.query.id);
       let user = await Admin.findOneAndDelete({
         _id: req.query.id,
       });
       if (!user)
-        return res.json({ msg: "User does not exists!", success: false }).status(400);
+        return res
+          .json({ msg: "User does not exists!", success: false })
+          .status(400);
 
       res
         .json({
@@ -186,7 +187,6 @@ module.exports = {
           success: true,
         })
         .status(200);
-
     } catch (error) {
       console.error(error);
       res.send(error);

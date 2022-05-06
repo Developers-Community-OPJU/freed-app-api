@@ -7,8 +7,7 @@ var fcm = new FCM(serverKey);
 
 // SEND NOITIFICATION
 router.post("/send/:sender-id", async (req, res) => {
-
-    // get msg from the body  
+  // get msg from the body
 
   var message = {
     //this may vary according to the message type (single recipient, multicast, topic, et cetera)

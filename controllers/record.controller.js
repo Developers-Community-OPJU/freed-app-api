@@ -20,7 +20,7 @@ module.exports = {
         .populate({
           path: "student",
           select: "firstName lastName course branch semester",
-        })    
+        })
         .select("-__v -device_id -reason -remark_by_warden -approval");
 
       if (!records)

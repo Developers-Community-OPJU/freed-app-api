@@ -13,10 +13,12 @@ module.exports = {
       console.error(error);
     }
   },
-   GET_STUDENT: async (req, res) => {
+  GET_STUDENT: async (req, res) => {
     try {
       // FINDING STUDENT WITH ID
-      const student = await Student.find({_id : req.params.id}).select('-password');      
+      const student = await Student.find({ _id: req.params.id }).select(
+        "-password"
+      );
       res.status(200).json({
         student,
         success: true,
@@ -25,9 +27,9 @@ module.exports = {
       console.error(error);
     }
   },
-  
+
   VERIFY_STUDENT: async (req, res) => {
-    try {     
+    try {
       const verified = await Student.updateOne(
         {
           _id: req.params.id,
@@ -35,8 +37,8 @@ module.exports = {
         {
           verified: true,
         }
-      );     
-     
+      );
+
       res.status(200).json({ verified, success: true });
     } catch (error) {
       console.error(error);
