@@ -1,6 +1,7 @@
 const { Checklist } = require("../models/Checklist");
 const { Checkout } = require("../models/Checkout");
 const { Checkin } = require("../models/Checkin");
+const { Student } = require("../models/StudentModel");
 const { RecordModel } = require("../models/RecordModel");
 
 module.exports = {
@@ -8,15 +9,14 @@ module.exports = {
     try {
       // check if studentid in checklist
       let inChecklist = await Checklist.findOne({ record: req.body.recordId });
+      // check if studentid in checkout
+      let inCheckout = await Checkout.findOne({ record: req.body.recordId });
 
       if (!inChecklist)
         return res.status(200).json({
           msg: "Sorry, You Cannot Proceed to Checkout",
           success: false,
         });
-
-      // check if studentid in checkout
-      let inCheckout = await Checkout.findOne({ record: req.body.recordId });
 
       // *********** ************* ************** ******************
       //     if user already in checkout list -> perform checkin process
@@ -28,6 +28,9 @@ module.exports = {
           student: inChecklist.student,
           record: inChecklist.record,
         });
+
+        //find student profile picture
+        let studentProfile = await Student.findOne({ _id: inCheckout.student });
 
         let removed = await Checkout.findOneAndRemove({
           record: inChecklist.record,
@@ -43,8 +46,12 @@ module.exports = {
           await checkin.save();
           return res.json({
             checkedin: true,
+            profile: studentProfile.profile,
             msg: "Welcome, Great to have you back!",
             success: true,
+            data: {
+              student: inChecklist.student,
+            },
           });
         }
       } else if (inChecklist) {
