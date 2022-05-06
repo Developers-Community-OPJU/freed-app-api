@@ -29,7 +29,7 @@ module.exports = {
           record: inChecklist.record,
         });
 
-        //find student profile picture
+        //find student profile picture flom checkout list
         let studentProfile = await Student.findOne({ _id: inCheckout.student });
 
         let removed = await Checkout.findOneAndRemove({
@@ -46,6 +46,7 @@ module.exports = {
           await checkin.save();
           return res.json({
             checkedin: true,
+            studentName: studentProfile.firstName+" "+studentProfile.lastName,
             profile: studentProfile.profile,
             msg: "Welcome, Great to have you back!",
             success: true,
@@ -62,9 +63,14 @@ module.exports = {
           record: inChecklist.record,
         });
 
+        //find student profile picture from checklist
+        let studentProfile = await Student.findOne({ _id: inChecklist.student });
+
         await checkout.save();
         return res.status(200).json({
           checkedout: true,
+          studentName: studentProfile.firstName+" "+studentProfile.lastName,
+          profile: studentProfile.profile,
           msg: "Hurray! Have a Great Journey :)",
           success: true,
           data: {
