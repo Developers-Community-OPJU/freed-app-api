@@ -63,15 +63,16 @@ module.exports = {
         path: "student",
         select: "firstName lastName course branch semester residence verified",
       });
-      // .select("student approval from to");
 
       // GET RECORDS WITH ADMIN.DEPT == RECORD.Student.branch
-      records = records.filter((record) => {
-        return (
-          record.student.verified &&
-          record.student.residence == admin.department
-        );
-      });
+      if (records.length > 0) {
+        records = records.filter((record) => {
+          return (
+            record.student.verified &&
+            record.student.residence == admin.department
+          );
+        });
+      }
 
       if (records.length == 0)
         return res

@@ -466,9 +466,3 @@ const newRecordId = async (student_id) => {
   console.log("new length : ", records.length + 1);
   return "L" + hash + (records.length + 1);
 };
-
-const getPagination = (page, size = 12) => {
-  const limit = size ? +size : 3;
-  const offset = page ? page * limit : 0;
-  return { limit, offset };
-};
