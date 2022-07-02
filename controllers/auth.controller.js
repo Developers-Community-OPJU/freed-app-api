@@ -212,6 +212,7 @@ module.exports = {
       }
 
       const OTP = await generateOTP();
+      console.log("New OTP is : ", OTP);
       if (!OTP) {
         return res.status(501).json({
           msg: "Please, try again",
