@@ -1,6 +1,6 @@
 ##  FREED APP - SERVER API
 
-##### BASE_URL = "https://dco-leave-app-api.herokuapp.com/"
+##### BASE_URL = "https://dco-leave-app-api.herokuapp.com/" (temporary deployment)
 
 ### RECORDS ENDPOINTS
 
